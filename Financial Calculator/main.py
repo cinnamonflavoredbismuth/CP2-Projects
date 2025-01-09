@@ -20,8 +20,39 @@ def tip(): #Tip Calculator
 def main():
     exit=False
     print('Welcome to your financial calculator')
-    int(input('''What would you like to do?
+    try:
+        select=int(input('''What would you like to do?
               1. Calculate how long it will take to save based on a weekly or monthly deposit
-              2. Compound Interest Calculator '''))
+              2. Compound Interest Calculator 
+              3. Budget Allocator
+              4. Sale Price Calculator
+              5. Tip Calculator'''))
+        if select==1:
+                goal()
+        elif select==2:
+                interest()
+        elif select==3:
+                budget()
+        elif select==4:
+                sale()
+        elif select==5:
+                tip()
+    except:
+        print('invalid number')
+    try:
+        select=int(input("""Would you like to exit?
+                     1. Yes
+                     2. No"""))
+        if select==2:
+            exit=False
+        else:
+            exit=True
+    
+    except:
+        print('invalid number')
+    print(exit)
     if exit==False:
         main()
+    else:
+         print('exit')
+main()
