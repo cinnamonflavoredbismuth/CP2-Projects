@@ -17,21 +17,28 @@ def display(library):
 
 #search all items (by name or author) 2
 def search(library):
-    pass
-
+    name=input("What is the title/author?")
+    if name in library:
+        print(f"{name} is in the library")
+    else:
+        print(f"{name} is not in the library")
 #add item (add name and author) 3
 def add(library):
     name=input("What is the name of the book?\n")
     author=input("What is the author?\n")
-    library.add((name,author))
+    library.append((name,author))
 
 #remove item 4
 def remove(library):
-    pass
-
+    name=input("What is the title/author?")
+    if name in library:
+        library.remove(f"{name}")
+    else:
+        print(f"{name} is not in the library")
+    
 def main():
     #how the library will work: [name,author] for each item in the library list
-    library={("The Boy Wonder #1","Juni Ba"),("The Boy Wonder #2","Juni Ba")}
+    library=[("The Boy Wonder #1","Juni Ba"),("The Boy Wonder #2","Juni Ba")]
     run=True
     while run==True:
             select=int(input("""What would you like to do?
