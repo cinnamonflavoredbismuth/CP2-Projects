@@ -12,13 +12,8 @@ HINT: You can make this by randomly selecting from different lists OR by randoml
 import random
 import string
 
-def choose():
-    main_list=[int(input("How many characters do you want your password to be?"))
-               ,input("Do you want uppercase letters? y/n"),input("Do you want lowercase letters? y/n")
-               ,input("Do you want numbers? y/n"),input("Do you want special characters? y/n")]
-    return(main_list)
 def length():
-    return(int(input("How many characters do you want your password to be?")))
+    return(int(input("How many characters do you want your password to be?\n")))
 
 def uppercase():
     return(random.choice(string.ascii_uppercase))
@@ -32,24 +27,36 @@ def numbers():
 def special_chars():
     return(random.choice(string.punctuation))
 
-def assemble():
-    pass
-
 def main():
-    main_list=print()
-    print(main_list)
-    functions=[]
+    
     password=[]
-    if main_list[1]=="y":
-        functions.append(uppercase())
-    if main_list[2]=="y":
-        functions.append(lowercase())
-    if main_list[3]=="y":
-        functions.append(numbers())
-    if main_list[4]=="y":
-        functions.append(special_chars())
+    amount=length()
+    functions=[]
+    questions=["Do you want uppercase letters? y/n\n","Do you want lowercase letters? y/n\n","Do you want numbers? y/n\n","Do you want special characters? y/n\n"]
+    all_functions=[uppercase,lowercase,numbers,special_chars]
+    for x in range(4):
+        yn=0
+        while yn!="y" and yn!="n":
+            yn=str(input(questions[x]))
+            if yn=="y":
+                functions.append(x)
+                break
+            elif yn=="n":
+                break
+            else:
+                print("invalid option")
     print(functions)
-    for x in range(main_list[0]+1):
-        password.append(random.choice(functions))
-        print(password)
+    for x in range(amount):
+        password.append(all_functions[random.randint(0,len(functions))]())
+    print("".join(password))
+    '''
+functions=[uppercase,lowercase,numbers,special_chars]
+print(len(functions))
+print(random.randint(0,3))
+print(random.randint(0,len(functions)))
+print(functions[1])
+print(functions[random.randint(0,len(functions))])
+functions[1]
+functions[random.randint(0,len(functions))]
+'''
 main()
