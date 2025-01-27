@@ -12,23 +12,28 @@ HINT: You can make this by randomly selecting from different lists OR by randoml
 import random
 import string
 
+#length of the password
 def length():
     return(int(input("How many characters do you want your password to be?\n")))
 
+#upercase letters
 def uppercase():
     return(random.choice(string.ascii_uppercase))
  
+#lowercase letters
 def lowercase():
     return(random.choice(string.ascii_lowercase))
 
+#numbers
 def numbers():
     return(random.choice(string.digits))
 
+#special characters
 def special_chars():
     return(random.choice(string.punctuation))
 
+#main function
 def main():
-    
     password=[]
     amount=length()
     functions=[]
@@ -39,24 +44,15 @@ def main():
         while yn!="y" and yn!="n":
             yn=str(input(questions[x]))
             if yn=="y":
+                print(x)
                 functions.append(x)
                 break
             elif yn=="n":
                 break
             else:
-                print("invalid option")
-    print(functions)
+                print("invalid option\n") #stupid proofing
     for x in range(amount):
-        password.append(all_functions[random.randint(0,len(functions))]())
+        password.append(all_functions[random.choice(functions)]()) #basically this it picking a random function from the ones you said yes to 
     print("".join(password))
-    '''
-functions=[uppercase,lowercase,numbers,special_chars]
-print(len(functions))
-print(random.randint(0,3))
-print(random.randint(0,len(functions)))
-print(functions[1])
-print(functions[random.randint(0,len(functions))])
-functions[1]
-functions[random.randint(0,len(functions))]
-'''
+
 main()
