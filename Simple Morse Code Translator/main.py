@@ -13,23 +13,32 @@ Use white space to make sure code is easy to read
 
 
 
-def morse_to_english(code): #morse to english, option 1
+def morse_to_english(): #morse to english, option 1
     morse=[".-",'-...','-.-.','-..','.','..-.','--.','....','..','.---','-.-','.-..','--','-.','---','.--.','--.-','.-.','...','-','..-','...-',
        '.--','-..-','-.--','--..','-----','.----','..---','...--','....-','.....','-....','--...','---..','----.','.-.-.-','--..--','..--..','/']
     english=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'
          ,'0','1','2','3','4','5','6','7','8','9','.',',','?',' ']
+    code=input("What do you want to translate?\n")
     code3=code.split(' ')
+    for x in code3:
+        if x not in morse:
+            return("Invalid")
     for x in code3:
         code3[code3.index(x)]=english[morse.index(x)]
     return(' '.join(code3))
 
-def english_to_morse(code): #english to morse code, option 2
+def english_to_morse(): #english to morse code, option 2
+    
     morse=[".-",'-...','-.-.','-..','.','..-.','--.','....','..','.---','-.-','.-..','--','-.','---','.--.','--.-','.-.','...','-','..-','...-',
        '.--','-..-','-.--','--..','-----','.----','..---','...--','....-','.....','-....','--...','---..','----.','.-.-.-','--..--','..--..','/']
     english=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'
          ,'0','1','2','3','4','5','6','7','8','9','.',',','?',' ']
+    code=input("What do you want to translate?\n")
     code2=code.lower()
     code3=list(code2)
+    for x in code3:
+        if x not in english:
+            return("Invalid")
     for x in code3:
         code3[code3.index(x)]=morse[english.index(x)]
     return(' '.join(code3))
@@ -44,10 +53,10 @@ def main():
                             3. Exit\n"""))
             if choice==1:
                 code=input("What do you want to translate?\n")
-                print(morse_to_english(code))
+                print(morse_to_english())
             elif choice==2:
-                code=input("What do you want to translate?\n")
-                print(english_to_morse(code))
+                
+                print(english_to_morse())
             elif choice==3:
                 break
             else:
