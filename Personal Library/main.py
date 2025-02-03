@@ -13,7 +13,7 @@ Have at least 2 people test your code before submission!
 #display all items (name, author or both?) 1
 def display(library):
     for x in library:
-        print(f"{x[0]} by {x[1]}")
+        print(library[x])
 
 #search all items (by name or author) 2
 def search(library):
@@ -26,7 +26,17 @@ def search(library):
 def add(library):
     name=input("What is the name of the book?\n")
     author=input("What is the author?\n")
-    library.append((name,author))
+    artist=input("What is the artist?")
+    issue=input("What issue is it?")
+    series=input("What series is it part of?")
+
+    dictionary=(input("What is the name of the book?\n"):{
+        "author": input("Who is the author?\n"),
+        "artist": input("Who is the artist?"),
+        "issue": input("What issue is it?"),
+        "series": input("What series is it part of?")
+        })
+    print(library)
 
 #remove item 4
 def remove(library):
@@ -38,7 +48,20 @@ def remove(library):
     
 def main():
     #how the library will work: [name,author] for each item in the library list
-    library=[("The Boy Wonder #1","Juni Ba"),("The Boy Wonder #2","Juni Ba")]
+    library={"The Boy Wonder #1":{
+        "author":"Juni Ba",
+        "artist":"Juni Ba",
+        "issue":"1",
+        "series":"The Boy Wonder"
+        },
+        "The Boy Wonder #2":{
+        "author":"Juni Ba",
+        "artist":"Juni Ba",
+        "issue":"2",
+        "series":"The Boy Wonder"
+        }
+    }
+        
     run=True
     while run==True:
             select=int(input("""What would you like to do?
