@@ -29,7 +29,7 @@ def add(library):
     artist=input("What is the artist?")
     issue=input("What issue is it?")
     series=input("What series is it part of?")
-    library.add({
+    library.append({
         name:{"author":author,
         "artist":artist,
         "issue":issue,
@@ -41,26 +41,26 @@ def add(library):
 def remove(library):
     name=input("What is the title/author?")
     if name in library:
-        library.remove()
+        library.remove(name)
     else:
         print(f"{name} is not in the library")
     
 def main():
     #how the library will work: [name,author] for each item in the library list
-    library={
-        "The Boy Wonder #1":{
+    library=[
+        {"The Boy Wonder #1":{
             "author":"Juni Ba",
             "artist":"Juni Ba",
             "issue":"1",
             "series":"The Boy Wonder"
-        },
-        "The Boy Wonder #2":{
+        }},
+        {"The Boy Wonder #2":{
             "author":"Juni Ba",
             "artist":"Juni Ba",
             "issue":"2",
             "series":"The Boy Wonder"
-        }
-    }
+        }}
+    ]
         
     run=True
     while run==True:
