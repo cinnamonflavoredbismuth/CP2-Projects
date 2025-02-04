@@ -29,36 +29,36 @@ def add(library):
     artist=input("What is the artist?")
     issue=input("What issue is it?")
     series=input("What series is it part of?")
-
-    dictionary=(input("What is the name of the book?\n"):{
-        "author": input("Who is the author?\n"),
-        "artist": input("Who is the artist?"),
-        "issue": input("What issue is it?"),
-        "series": input("What series is it part of?")
-        })
+    library.add({
+        name:{"author":author,
+        "artist":artist,
+        "issue":issue,
+        "series":series}
+                     })
     print(library)
 
 #remove item 4
 def remove(library):
     name=input("What is the title/author?")
     if name in library:
-        library.remove(f"{name}")
+        library.remove()
     else:
         print(f"{name} is not in the library")
     
 def main():
     #how the library will work: [name,author] for each item in the library list
-    library={"The Boy Wonder #1":{
-        "author":"Juni Ba",
-        "artist":"Juni Ba",
-        "issue":"1",
-        "series":"The Boy Wonder"
+    library={
+        "The Boy Wonder #1":{
+            "author":"Juni Ba",
+            "artist":"Juni Ba",
+            "issue":"1",
+            "series":"The Boy Wonder"
         },
         "The Boy Wonder #2":{
-        "author":"Juni Ba",
-        "artist":"Juni Ba",
-        "issue":"2",
-        "series":"The Boy Wonder"
+            "author":"Juni Ba",
+            "artist":"Juni Ba",
+            "issue":"2",
+            "series":"The Boy Wonder"
         }
     }
         
