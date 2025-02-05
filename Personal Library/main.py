@@ -12,16 +12,37 @@ Have at least 2 people test your code before submission!
 """
 #display all items (name, author or both?) 1
 def display(library):
-    for x in library:
-        print(library[x])
+    for dicts in library:
+        for names in dicts:
+            print(f"{names}:") #Title
+            for keys in library[library.index(dicts)][names]:
+                print(f"    {keys}: {library[library.index(dicts)][names][keys]}") #information
 
 #search all items (by name or author) 2
 def search(library):
-    name=input("What is the title/author?")
-    if name in library:
-        print(f"{name} is in the library")
-    else:
-        print(f"{name} is not in the library")
+
+        innit=False
+        choose=int(input('''Press the number of what you want
+        1. Title
+        2. Author
+        3. Artist
+        4. issue number
+        5. Series\n'''))
+        if choose==1:
+            name=input("What is the name of the comic?\n")
+            for dicts in library:
+                for names in dicts:
+                    print(names)
+                    if name == names:
+                        innit=True
+                    
+            if innit==True:
+                print("It is in the library")
+            else:
+                print("nope")
+
+
+    
 #add item (add name and author) 3
 def add(library):
     name=input("What is the name of the book?\n")
@@ -39,7 +60,7 @@ def add(library):
 
 #remove item 4
 def remove(library):
-    name=input("What is the title/author?")
+    name=input("What is the Title?")
     if name in library:
         library.remove(name)
     else:
