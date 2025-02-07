@@ -11,89 +11,107 @@ Good use of white space to keep items separate and easy to read/find
 Have at least 2 people test your code before submission!
 """
 
-#display all items (name, author or both?) 1
+#display all items 
 def display(library):
     for dicts in library:
         for names in dicts:
             print(f"{names}:") #Title
             for keys in library[library.index(dicts)][names]:
                 print(f"    {keys}: {library[library.index(dicts)][names][keys]}") #information
+    return
 
+#finding the book by the items in the keys (author, artist, ect)
 def find(identifier,library,books):
     key=input(f"Who is the {identifier}?\n")
-    for dicts in library:
-        for names in dicts:
-                for keys in library[library.index(dicts)][names]:
+    for dicts in library: #all the dictionaries
+        for names in dicts: #all the titles
+                for keys in library[library.index(dicts)][names]: #identifiers of the books
                     if keys==identifier:
-                        if library[library.index(dicts)][names][keys]==key:
+                        if (library[library.index(dicts)][names][keys]).lower()==key.lower(): #specific identifiers
                                 innit=True
                                 books.add(names)
     if innit==True:
                 print(f"The comics that have this {identifier} are:")
                 print(*books, sep=', ')
+                return
     else:
         print(f"This is not an avaliable {identifier}")
+        return
+
 #search all items (by name or author) 2
 def search(library):
 
         innit=False
         books=set()
-        choose=int(input('''Press the number of what you want
-        1. Title
-        2. Author
-        3. Artist
-        4. issue number
-        5. Series\n'''))
-        if choose==1:
-            name=input("What is the name of the comic?\n")
-            for dicts in library:
-                for names in dicts:
-                    print(names)
-                    if name == names:
-                        innit=True
-            if innit==True:
-                print(f"{name} is in the library")
+        try:
+            choose=int(input('''Press the number of what you want
+            1. Title
+            2. Author
+            3. Artist
+            4. issue number
+            5. Series\n'''))
+            if choose==1:
+                name=input("What is the name of the comic?\n")
+                for dicts in library:
+                    for names in dicts:
+                        if name.lower() == names.lower():
+                            innit=True
+                if innit==True:
+                    print(f"{name} is in the library")
+                    return
+                else:
+                    print(f"{name} is not in the library")
+                    return
+            elif choose==2:
+                find("author",library,books)
+                return
+            elif choose==3:
+                find("artist",library,books)
+                return
+            elif choose==4:
+                find("issue",library,books)
+                return
+            elif choose==5:
+                find("series",library,books)
+                return
             else:
-                print(f"{name} is not in the library")
-        elif choose==2:
-            find("author",library,books)
-            if innit==True:
-                print("The comics that have this author are:")
-                print(*books, sep=', ')
-            else:
-                print("This is not an avaliable author")
-        elif choose==3:
-            find("artist",library,books)
-            
-        
-
-
-    
+                print("invalid option")
+                return
+        except:
+            print("invalid option")
+           
 #add item (add name and author) 3
 def add(library):
     name=input("What is the name of the book?\n")
     author=input("What is the author?\n")
-    artist=input("What is the artist?")
-    issue=input("What issue is it?")
-    series=input("What series is it part of?")
+    artist=input("What is the artist?\n")
+    issue=input("What issue is it?\n")
+    series=input("What series is it part of?\n")
     library.append({
         name:{"author":author,
         "artist":artist,
         "issue":issue,
         "series":series}
                      })
-    print(library)
+    display()
+    return
 
 #remove item 4
 def remove(library):
-    name=input("What is the Title?")
-    if name in library:
-        library.remove(name)
-    else:
+    
+    name=input("What is the title?\n")
+    for dicts in library: #dictionaries in libraries
+        for names in dicts: #titles
+            if name.lower()==names.lower():
+                index=library.index(dicts) #uses the whole dictionary and finds the index
+    try:
+        library.pop(index) #deletes
+    except:
         print(f"{name} is not in the library")
+    display()
+    return
     
 def main():
-    #how the library will work: [name,author] for each item in the library list
     library=[
         {"The Boy Wonder #1":{
             "author":"Juni Ba",
@@ -111,6 +129,7 @@ def main():
         
     run=True
     while run==True:
+        try:
             select=int(input("""What would you like to do?
                      1. Display all items
                      2. Search items
@@ -129,6 +148,10 @@ def main():
                 print("Thank you")
                 run=False
                 break
+            else:
+                print("invalid choice")
+        except:
+            print("invalid choice")
 
 
 main()
