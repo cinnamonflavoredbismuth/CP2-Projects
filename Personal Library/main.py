@@ -82,9 +82,9 @@ def search(library):
            
 #add item (add name and author) 3
 def add(library):
-    name=input("What is the name of the book?\n")
-    author=input("What is the author?\n")
-    artist=input("What is the artist?\n")
+    name=input("What is the name of the comic?\n")
+    author=input("Who is the author?\n")
+    artist=input("Who is the artist?\n")
     issue=input("What issue is it?\n")
     series=input("What series is it part of?\n")
     library.append({
@@ -93,8 +93,8 @@ def add(library):
         "issue":issue,
         "series":series}
                      })
-    display()
-    return
+    display(library)
+    
 
 #remove item 4
 def remove(library):
@@ -108,7 +108,7 @@ def remove(library):
         library.pop(index) #deletes
     except:
         print(f"{name} is not in the library")
-    display()
+    display(library)
     return
     
 def main():
