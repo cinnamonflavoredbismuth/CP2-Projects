@@ -14,77 +14,79 @@ with open("movie_recommender\Movies list.csv") as file:
     next(reader)
     for row in reader:
         movie[row[0]] = {
-                        "Director":row[1],
-                        "Genre": row[2],
-                        "Rating": row[3],
-                        "Length": row[4],
-                        "Notable Actors":[row[5].join(' ,')]
+                        "Director":[row[1]],
+                        "Genre": [row[2]],
+                        "Rating": [row[3]],
+                        "Length": [row[4]],
+                        "Notable Actors":[row[5]]
                          }    
-
 
 #displays the movies
 def display(search,movie):
     for titles in search: #for filtering to work, instead of using the whole dictionary use just the filtered list
         print(titles) #prints the title
         for categories in movie[titles]:
-            print(f"    {categories}: {movie[titles][categories]}") #prints each category and whats in it
+            print(f"    {categories}: {' '.join(movie[titles][categories])}") #prints each category and whats in it
 
 #making the original filters
 def filters():
-    actors = []
     exit = False
-    identifiers = ["title","director",'genre','rating','length','notable actor(s)']
-    vars = ["title",'director','genre','rating','length','notable_actors']
+    identifiers = ['title','director','genre','rating','length in minutes','notable actor(s)']
+    vars = {'titles':[],
+            'director':[],
+            'genre':[],
+            'rating':[],
+            'length in minutes':[],
+            'notable actor(s)':[]}
     for x in identifiers:
         if x == 'notable actor(s)':
             while exit == False:   #this lets you type in as many actors as you want
-                individual = input("What actor would you like? type done to be done\n")
-                if individual.lower() == 'done': #adds to the filters list and finishes the program
-                    vars[identifiers.index] = actors
+                individual = input("What actor would you like? type none to be done\n")
+                if individual.lower() == 'none': #adds to the filters list and finishes the program
                     break
-                else: #adds to the actor list that will eventually be added
-                    actors.append(individual)
-        else:   #lets you add filters
+                else: 
+                    vars[x].append(individual)   #lets you add filters
+        else:
             choose = input(f"What is the {x}? type none to skip\n")        
             if choose.lower() == "none": #keeps it as empty so the filter is not applied
-                vars[identifiers.index(x)] = ""
+                vars[x].clear()    
+            if x == 'length': #lets you use a range of ten minutes in either direction
+                vars[x].append(choose)
+                for y in range(10):
+                    vars[x].append(int(choose)+y)
+                for y in range(10):
+                    vars[x].append(int(choose)-y)       
             else:
-                vars[identifiers.index(x)] = choose
+                vars[x].append(choose)
+
+
     return(vars)
 
 #checking all the movies using the filters
 def search(movie,vars):
     filter = []
     search = []
-#                      0        1        2       3        4            5
+    #                 0        1        2       3        4            5
     identifiers = ["title","director",'genre','rating','length','notable actor(s)']
 
     for titles in movie: #check the title
         if len(vars[0])>0: 
-            if vars[0].lower() == titles.lower():
+            if vars[0].lower() in titles.lower():
                 filter.append[True] 
             else: filter.append[False] #if the filter does not conform to the specification
         else:filter.append[True]
 
         
-        for x in vars[1:4]: #check the director, genre, rating, and length
+        for x in vars[1:5]: #check the director, genre, rating, and length
             if len(vars)>0:
-                if (movie[titles][identifiers[vars.index[x]]]).lower() == vars.lower():
-                    (filter.append[True])
-                else: (filter.append[False]) #if the filter does not conform to the specification
+                for y in x:
+                    if y.lower() in (movie[titles][identifiers[vars.index[x]]]).lower():
+                        (filter.append[True])
+                    else: (filter.append[False]) #if the filter does not conform to the specification
             else:(filter.append[True])
-
         
-        if len(vars[5])>0:  #check the notable actors
-            if vars[5].lower() in (movie[titles]["Notable Actors"]).lower():
-                filter.append[True]
-            else: filter.append[False] #if the filter does not have all the actors that were wanted
-        else:filter.append[True]
-
-        
-        if False not in filter: #adds the movie to the list of the correct results
-            #the falses are for if the movie does not contain all specifications
-            search.append(titles)
+        if False not in filter: #the falses are for if the movie does not contain all specifications
+            search.append(titles) #adds the movie to the list of the correct results
 
     #This is the final list of all the movies that are within the parameters
     return(search)
