@@ -10,6 +10,16 @@ a+ = append and read
 """
 import csv
 
-with open("Notes UwU/reading_files/user_info.csv", "w") as file:
-    file.write("computer science!")
-    print(file.read())
+data=[
+    {"username":'hi','color':'blue'}
+    ]
+with open("Notes UwU/reading_files/user_info.csv","a",newline="") as file:
+    fieldnames=['']
+    writer = csv.DictWriter(file, fieldnames=fieldnames)
+    writer.writeheader()
+    writer.writerows(data)
+
+with open("Notes UwU/reading_files/user_info.csv","r") as file:
+    reader = csv.reader(file)
+    for row in reader:
+        print(f"{row[0]}\n{row[1]} \n ----------------------------")

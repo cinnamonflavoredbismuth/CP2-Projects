@@ -1,7 +1,8 @@
 Cecily Strong Write to files Notes
 
 -How do you find a file in a folder? 
-
+right click on it and choose copy reletive path
 -In a python project how do you open a file?
-
+with open("Noame","r") as file:
 -What is the difference between writing, appending, and creation modes?
+writing replaces the whole code, appending adds to it, and creation makes a whole new file
