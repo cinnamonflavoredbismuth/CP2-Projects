@@ -11,14 +11,14 @@ a+ = append and read
 import csv
 #import pandas
 
-'''data=[
+data=[
     {"username":'hi','color':'blue'}
     ]
 with open("Notes UwU/reading_files/user_info.csv","a",newline="") as file:
     fieldnames=['']
     writer = csv.DictWriter(file, fieldnames=fieldnames)
     writer.writeheader()
-    writer.writerows(data)'''
+    writer.writerows(data)
 
 with open("Notes UwU/reading_files/user_info.csv","r") as file:
     reader = csv.reader(file)
