@@ -14,11 +14,11 @@ with open("movie_recommender\Movies list.csv") as file:
     next(reader)
     for row in reader:
         movie[row[0]] = {
-                        "Director":[row[1]],
-                        "Genre": [row[2]],
-                        "Rating": [row[3]],
-                        "Length": [row[4]],
-                        "Notable Actors":[row[5]]
+                        "director":[row[1]],
+                        "genre": [row[2]],
+                        "rating": [row[3]],
+                        "length": [row[4]],
+                        "notable actors":[row[5]]
                          }    
 
 #displays the movies
@@ -32,34 +32,34 @@ def display(search,movie):
 def filters():
     exit = False
     identifiers = ['title','director','genre','rating','length in minutes','notable actor(s)']
-    vars = {'titles':[],
+    vars = {'title':[],
             'director':[],
             'genre':[],
             'rating':[],
             'length in minutes':[],
             'notable actor(s)':[]}
     for x in identifiers:
+        item=[]
         if x == 'notable actor(s)':
             while exit == False:   #this lets you type in as many actors as you want
                 individual = input("What actor would you like? type none to be done\n")
                 if individual.lower() == 'none': #adds to the filters list and finishes the program
                     break
                 else: 
-                    vars[x].append(individual)   #lets you add filters
+                   item.append(individual)   #lets you add filters
         else:
-            choose = input(f"What is the {x}? type none to skip\n")        
+            choose = input(f"What is the {x}? type none to skip\n")
             if choose.lower() == "none": #keeps it as empty so the filter is not applied
-                vars[x].clear()    
-            if x == 'length': #lets you use a range of ten minutes in either direction
-                vars[x].append(choose)
+                item=[]
+            elif x == 'length': #lets you use a range of ten minutes in either direction
+                item.append(choose)
                 for y in range(10):
-                    vars[x].append(int(choose)+y)
+                    item.append(int(choose)+y)
                 for y in range(10):
-                    vars[x].append(int(choose)-y)       
+                    item.append(int(choose)-y) 
             else:
-                vars[x].append(choose)
-
-
+                item.append(choose)
+        vars[x]=item
     return(vars)
 
 #checking all the movies using the filters
@@ -67,25 +67,25 @@ def search(movie,vars):
     filter = []
     search = []
     #                 0        1        2       3        4            5
-    identifiers = ["title","director",'genre','rating','length','notable actor(s)']
-
+    identifiers = ["title","director",'genre','rating','length in minutes','notable actor(s)']
     for titles in movie: #check the title
-        if len(vars[0])>0: 
-            if vars[0].lower() in titles.lower():
-                filter.append[True] 
-            else: filter.append[False] #if the filter does not conform to the specification
-        else:filter.append[True]
+        if len(vars['title'])>0: 
+            if vars['title'].lower() in titles.lower():
+                filter.append(True) 
+            else: filter.append(False) #if the filter does not conform to the specification
+        else:
+            filter.append(True)
 
+        for x in identifiers[1:5]: #check the director, genre, rating, and length
+            if len(vars[x])>0:
+                for y in vars[x]:
+                    if y.lower() in (z.lower() for z in (movie[titles][x])):
+                        (filter.append(True))
+                    else: (filter.append(False)) #if the filter does not conform to the specification
+            else:
+                filter.append(True)
         
-        for x in vars[1:5]: #check the director, genre, rating, and length
-            if len(vars)>0:
-                for y in x:
-                    if y.lower() in (movie[titles][identifiers[vars.index[x]]]).lower():
-                        (filter.append[True])
-                    else: (filter.append[False]) #if the filter does not conform to the specification
-            else:(filter.append[True])
-        
-        if False not in filter: #the falses are for if the movie does not contain all specifications
+        if 0 not in filter: #the falses are for if the movie does not contain all specifications
             search.append(titles) #adds the movie to the list of the correct results
 
     #This is the final list of all the movies that are within the parameters
@@ -93,6 +93,17 @@ def search(movie,vars):
 
 #main interface. lets you choose what to do
 def main(movie):
+    
+    #For testing!!!
+    """
+    vars_for_testing = {'title':[],
+            'director':[],
+            'genre':[],
+            'rating':['R'],
+            'length in minutes':[],
+            'notable actor(s)':[]}
+    """
+
     stay = True
     while stay == True: #lets it run for however long you want
         try:
@@ -104,6 +115,7 @@ Choose the number of what to do
                 
             if choice == 1: #filter the movies and then display
                 vars = filters()
+                #vars=vars_for_testing
                 filtered = search(movie,vars)
                 display(filtered,movie)
             elif choice == 2: #display all the movies
