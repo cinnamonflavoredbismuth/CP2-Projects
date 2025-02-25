@@ -15,7 +15,7 @@ with open("movie_recommender\Movies list.csv") as file:
     for row in reader:
         movie[row[0]] = {
                         "director":[row[1]],
-                        "genre": [row[2]],
+                        "genre": row[2],
                         "rating": [row[3]],
                         "length": [row[4]],
                         "notable actors":[row[5]]
@@ -34,7 +34,7 @@ def filters():
     identifiers = ['title','director','genre','rating','length in minutes','notable actor(s)']
     vars = {'title':[],
             'director':[],
-            'genre':[],
+            'genre':'',
             'rating':[],
             'length in minutes':[],
             'notable actor(s)':[]}
@@ -66,11 +66,12 @@ def filters():
 def search(movie,vars):
     filter = []
     search = []
+    
     #                 0        1        2       3        4            5
-    identifiers = ["title","director",'genre','rating','length in minutes','notable actor(s)']
+    identifiers = ['title','director','genre','rating','length in minutes','notable actor(s)']
     for titles in movie: #check the title
         if len(vars['title'])>0: 
-            if vars['title'].lower() in titles.lower():
+            if (z.lower() for z in vars['title']) in (z.lower() for z in titles):
                 filter.append(True) 
             else: filter.append(False) #if the filter does not conform to the specification
         else:
@@ -95,14 +96,15 @@ def search(movie,vars):
 def main(movie):
     
     #For testing!!!
-    """
-    vars_for_testing = {'title':[],
-            'director':[],
-            'genre':[],
-            'rating':['R'],
-            'length in minutes':[],
-            'notable actor(s)':[]}
-    """
+    #"""
+    vars_for_testing = {
+            'title':['Forrest Gump'],
+            'director':['Robert Zemeckis'],
+            'genre':['Drama'],
+            'rating':['pg-a3'],
+            'length in minutes':['140'],
+            'notable actor(s)':['Tim Robbins']}
+    #"""
 
     stay = True
     while stay == True: #lets it run for however long you want
@@ -114,8 +116,8 @@ Choose the number of what to do
             3. exit\n"""))
                 
             if choice == 1: #filter the movies and then display
-                vars = filters()
-                #vars=vars_for_testing
+                #vars = filters()
+                vars=vars_for_testing
                 filtered = search(movie,vars)
                 print('---------------------------------------')
                 print("The movies that fit this category are...")
@@ -132,4 +134,12 @@ Choose the number of what to do
         except:
             print("invalid choice")
 
-main(movie)
+vars_for_testing = {
+            'title':['Forrest Gump'],
+            'director':['Robert Zemeckis'],
+            'genre':['Drama'],
+            'rating':['pg-a3'],
+            'length in minutes':['140'],
+            'notable actor(s)':['Tim Robbins']}
+search(movie,vars_for_testing)
+#main(movie)
