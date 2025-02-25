@@ -117,8 +117,11 @@ Choose the number of what to do
                 vars = filters()
                 #vars=vars_for_testing
                 filtered = search(movie,vars)
+                print('---------------------------------------')
+                print("The movies that fit this category are...")
                 display(filtered,movie)
             elif choice == 2: #display all the movies
+                
                 display(movie.keys(),movie)
             elif choice == 3: #leave
                 return
