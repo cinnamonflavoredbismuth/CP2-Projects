@@ -21,7 +21,7 @@ def check(number):
             for row in reader:
                 the_dict.append(row[0])
 
-            if number in (the_dict):
+            if str(number) in (the_dict):
                 return True
             else:
                 return False
@@ -60,7 +60,7 @@ def remove(number):
             reader = csv.reader(file)
             next(reader)
             for row in reader:
-                if row[0] != number:
+                if row[0] != str(number):
                    correctlist.append({'number':row[0],'items':row[1],'completion status':row[2]})
             return correctlist
 
@@ -75,7 +75,7 @@ def complete(number):
     data = length()
     print(data)
     for x in data:
-        if data[data.index(x)]['number'] == number:
+        if data[data.index(x)]['number'] == str(number):
             data[data.index(x)]['completion status']='X'
     return data
 
@@ -87,18 +87,18 @@ def main():
                             1. Display List
                             2. Add an item
                             3. Remove an item
-                            4. Mark an item as done'''))
+                            4. Mark an item as done
+                            5. Exit
+                            '''))
             if choose == 1: #display
                 display()
             elif choose == 2: #add
                 item = input('what would you like to add?')
                 add(item)
             elif choose == 3: #remove
-                valid = False
-                while valid == False:
                     try:
                         number = int(input('what number do you want to remove?'))
-                        valid = (number)
+                        valid = check(number)
                         if valid == True:
                             remove(number)
                         else:
@@ -108,21 +108,20 @@ def main():
 
             elif choose == 4: #mark as complete
                 valid = False
-                while valid == False:
-                    try:
-                        number = int(input('what number do you want to remove?'))
-                        valid = check(number)
-                        if valid == True:
-                            complete(number)
-                        else:
-                            print('invalid option')
-                    except:
+                try:
+                    number = int(input('what number do you want to complete?'))
+                    valid = check(number)
+                    if valid == True:
+                        complete(number)
+                    else:
                         print('invalid option')
+                except:
+                    print('invalid option')
             elif choose == 5: #exit
                 break
             else:
                 print('invalid choice')
         except: print('invalid choice')
 
-
+remove(2)
 main()
