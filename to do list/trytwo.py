@@ -100,7 +100,7 @@ def main():
                         number = int(input('what number do you want to remove?'))
                         valid = check(number)
                         if valid == True:
-                            remove(number)
+                            write(remove(number))
                         else:
                             print('invalid option')
                     except:
@@ -112,7 +112,7 @@ def main():
                     number = int(input('what number do you want to complete?'))
                     valid = check(number)
                     if valid == True:
-                        complete(number)
+                        write(complete(number))
                     else:
                         print('invalid option')
                 except:
