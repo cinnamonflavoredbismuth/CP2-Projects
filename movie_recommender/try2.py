@@ -21,10 +21,11 @@ with open("movie_recommender\Movies list.csv") as file:
 def display(movie):
     for items in movie: #for filtering to work, instead of using the whole dictionary use just the filtered list
         #print(items)
-        for categories in movie:
-            #print(f"    {categories}: {' '.join(movie[titles][categories])}")
-            if categories=='notable actors':
-                print(f'{categories}: {' '.join(movie[movie.index(items)][categories])}')
+        print('--------------------------------')
+        for categories in items:
+            
+            if categories=='notable actor(s)':
+                print(f'{categories}: {" ".join(movie[movie.index(items)][categories])}')
             else:
                 print(f'{categories}: {(movie[movie.index(items)][categories])}')
 def filter():
@@ -62,28 +63,49 @@ def filter():
 
 def search(filter,movie):
     search=[]#all movie titles
-    check=[]#true/false
-    print(filter)
+    check=True#true/false
+    #print(filter)
     identifiers = ['title','director','genre','rating','length in minutes','notable actor(s)']
     for items in movie:
-        check=[]
+        #print(items)
+        check=True
         #print(items)
         for x in identifiers:
             if len(filter[x])>0:
-                if filter[x] in items[x]:
-                    check.append(True)
-                else:
-                    check.append(False)
-            else:
-                check.append(True)
-        print(check[0:-1])
-        if all(check)==True:
+                for z in filter[x]:
+                    if z in items[x]:
+                        pass
+                    else:
+                        check=False
+        #print(check)
+        #print(check[0:-1])
+        if check==True:
             search.append(items)
-    print(search)
-    
+
+    return search
+
+def main(movie,test_mode):
+    stay=True
+    while stay==True:
+        try:
+            choose=int(input("""Type the number of what you want:
+                             1. Display all movies
+                             2. filter movies
+                             3. Exit\n"""))
+            if choose==1:
+                display(movie)
+            elif choose==2:
+                if test_mode==False:
+                    display(search(filter(),movie))
+                else:
+                    display(search(movie[1],movie))
+            elif choose==3:
+                break
+            else:
+                print('invalid choice')
+        except:
+            print('invalid choice')
 
 
-#print(filter())
-search(movie[1],movie)
-
-#display(movie,movie)
+#main(movie,True)#testing mode
+main(movie,False)
