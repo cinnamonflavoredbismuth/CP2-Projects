@@ -1,5 +1,6 @@
 #Cecily Strong Word Counter
 #doc=input("type your file here")
+
 from time import time as timestamp
 """"Write a program that look at a document that a user has written on and update it with the word count and a timestamp for when that wordcount was last updated
 
@@ -24,5 +25,8 @@ def word_count(doc):
     return word_count
 def main(doc):
     with open(doc,"a") as file:
-        content = file.append()
-    print(f"The word count is: {word_count(doc)}. Word count was last updated {timestamp()}")
+        content = f"\nThe word count is: {word_count(doc)}. Word count was last updated {timestamp()}"
+        file.write(content)
+    print(content)
+print(timestamp())
+main(doc)

@@ -1,6 +1,6 @@
 #Cecily Strong Word Counter
-import datetime
+from datetime import date
 def time():
-    x=datetime.datetime.now()
+    x=date.today()
     return x
 print(time())
