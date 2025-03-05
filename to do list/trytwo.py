@@ -107,7 +107,7 @@ def main():
             if valid == True:
                 write(remove(number))
             else:
-                print('invalid option')
+                print('not an item in the list')
                 
 
         elif choose2 == 4: #mark as complete
@@ -119,10 +119,10 @@ def main():
         elif choose2 == 5: #exit
             return
         else:
-            print('invalid choice1')
+            print('not an option')
             main()
     except: 
-        print('invalid choice2')
+        print('not a number')
         main()
 
 
