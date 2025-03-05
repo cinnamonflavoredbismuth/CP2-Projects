@@ -21,19 +21,19 @@ def check(number):
             for row in reader:
                 the_dict.append(row[0])
 
-            if str(number) in (the_dict):
+            if number in the_dict:
+               
                 return True
             else:
+             
                 return False
-        
-
 
 def display():
     with open("to do list/list.csv","r") as file:
             reader = csv.reader(file)
             next(reader)
             for row in reader:
-                print(f" {row[0]}: {row[1]} {row[2]} \n ----------------------------")
+                print(f"{row[0]} {row[1]} \n ----------------------------")
 
 def write(data):
     with open("to do list/list.csv","w",newline='') as file:
@@ -51,77 +51,75 @@ def length():
             next(reader)
             for row in reader:
                 print(row[0])
-                correctlist.append({'number':row[0],'items':row[1],'completion status':row[2]})
+                correctlist.append({'items':row[0],'completion status':row[1]})
             return correctlist
      
-def remove(number):
+def remove(item):
     correctlist = []
     with open("to do list/list.csv","r") as file:
             reader = csv.reader(file)
             next(reader)
             for row in reader:
-                if row[0] != str(number):
-                   correctlist.append({'number':row[0],'items':row[1],'completion status':row[2]})
+                print(row)
+                if row[1] != item:
+                   correctlist.append({'items':row[0],'completion status':row[1]})
             return correctlist
 
 def add(item):
-    amount = len(length())
     with open("to do list/list.csv","a") as file:
          writer = csv.writer(file)
-         writer.writerow([amount+1,item,''])
+         writer.writerow([item,''])
     return
 
-def complete(number):
+def complete(item):
     data = length()
     print(data)
     for x in data:
-        if data[data.index(x)]['number'] == str(number):
+        if data[data.index(x)]['items'] == item:
             data[data.index(x)]['completion status']='X'
     return data
 
 def main():
-    exit=False
-    while exit == False:
-        try:
-            choose = int(input('''Press the number of what you want:
-                            1. Display List
-                            2. Add an item
-                            3. Remove an item
-                            4. Mark an item as done
-                            5. Exit
-                            '''))
-            if choose == 1: #display
-                display()
-            elif choose == 2: #add
-                item = input('what would you like to add?')
-                add(item)
-            elif choose == 3: #remove
-                    try:
-                        number = int(input('what number do you want to remove?'))
-                        valid = check(number)
-                        if valid == True:
-                            write(remove(number))
-                        else:
-                            print('invalid option')
-                    except:
-                        print('invalid option')
-
-            elif choose == 4: #mark as complete
-                valid = False
-                try:
-                    number = int(input('what number do you want to complete?'))
-                    valid = check(number)
-                    if valid == True:
-                        write(complete(number))
-                    else:
-                        print('invalid option')
-                except:
-                    print('invalid option')
-            elif choose == 5: #exit
-                break
+    try:
+        choose2 = int(input('''Press the number of what you want:
+                        1. Display List
+                        2. Add an item
+                        3. Remove an item
+                        4. Mark an item as done
+                        5. Exit
+                        '''))
+        if choose2 == 1: #display
+            display()
+        elif choose2 == 2: #add
+            item = input('what would you like to add?')
+            add(item)
+        elif choose2 == 3: #remove
+            number = input('what do you want to remove?')
+            valid = check(number)
+            if valid == True:
+                write(remove(number))
             else:
-                print('invalid choice')
-        except: print('invalid choice')
+                print('invalid option')
+                
 
-remove(2)
+        elif choose2 == 4: #mark as complete
+            valid = False
+            number = input('what do you want to complete?')
+            print(check(number))
+            valid = check(number)
+            if valid == True:
+                write(complete(number))
+            else:
+                print('invalid option')
+            
+        elif choose2 == 5: #exit
+            return
+        else:
+            print('invalid choice1')
+            main()
+    except: 
+        print('invalid choice2')
+        main()
+
+write(remove('mow lawn'))
 main()
