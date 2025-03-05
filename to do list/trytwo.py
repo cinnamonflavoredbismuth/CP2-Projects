@@ -31,13 +31,14 @@ def check(number):
 def display():
     with open("to do list/list.csv","r") as file:
             reader = csv.reader(file)
+            print(reader)
             next(reader)
             for row in reader:
                 print(f"{row[0]} {row[1]} \n ----------------------------")
 
 def write(data):
     with open("to do list/list.csv","w",newline='') as file:
-        keys = ["number","items","completion status"]
+        keys = ["items","completion status"]
         writer = csv.DictWriter(file,fieldnames = keys)
         writer.writeheader()
         writer.writerows(data)
@@ -61,9 +62,10 @@ def remove(item):
             next(reader)
             for row in reader:
                 print(row)
-                if row[1] != item:
+                if row[0] != item:
                    correctlist.append({'items':row[0],'completion status':row[1]})
-            return correctlist
+            write(correctlist)
+            return
 
 def add(item):
     with open("to do list/list.csv","a") as file:
@@ -72,12 +74,18 @@ def add(item):
     return
 
 def complete(item):
-    data = length()
-    print(data)
-    for x in data:
-        if data[data.index(x)]['items'] == item:
-            data[data.index(x)]['completion status']='X'
-    return data
+    correctlist=[]
+    with open("to do list/list.csv","r") as file:
+            reader = csv.reader(file)
+            next(reader)
+            for row in reader:
+                print(row)
+                if row[0] != item:
+                   correctlist.append({'items':row[0],'completion status':row[1]})
+                else:
+                   correctlist.append({'items':row[0],'completion status':'X'})  
+            write(correctlist)
+            return
 
 def main():
     try:
@@ -105,12 +113,8 @@ def main():
         elif choose2 == 4: #mark as complete
             valid = False
             number = input('what do you want to complete?')
-            print(check(number))
-            valid = check(number)
-            if valid == True:
-                write(complete(number))
-            else:
-                print('invalid option')
+            complete(number)
+            
             
         elif choose2 == 5: #exit
             return
@@ -121,5 +125,8 @@ def main():
         print('invalid choice2')
         main()
 
-write(remove('mow lawn'))
+
+display()
+remove('mow lawn')
+display()
 main()
