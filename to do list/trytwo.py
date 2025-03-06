@@ -11,79 +11,71 @@ a = append (add so the file, doesn't delete them) (create a file if it doesn't e
 x = create a file
 a+ = append and read
 """
-import csv
 
-def check(number):
-    the_dict=[]
-    with open("to do list/list.csv","r") as file:
-            reader = csv.reader(file)
-            next(reader)
-            for row in reader:
-                the_dict.append(row[0])
-
-            if number in the_dict:
-               
-                return True
-            else:
-             
-                return False
 
 def display():
-    with open("to do list/list.csv","r") as file:
-            reader = csv.reader(file)
-            print(reader)
-            next(reader)
-            for row in reader:
-                print(f"{row[0]} {row[1]} \n ----------------------------")
+    with open("to do list/list.txt","r") as file:
+            reader = file.read()
+            words=''
+            for item in reader:
+                if item == '\n':
+                    print(f"{words}")
+                    words=''
+                else:
+                    words=words+item
+                
 
 def write(data):
-    with open("to do list/list.csv","w",newline='') as file:
-        keys = ["items","completion status"]
-        writer = csv.DictWriter(file,fieldnames = keys)
-        writer.writeheader()
-        writer.writerows(data)
+    with open("to do list/list.txt","w",newline='') as file:
+        for x in data:
+            file.write(f"{data[data.index(x)]}\n")
     return
 
-def length():
-     correctlist=[]
-     
-     with open("to do list/list.csv","r") as file:
-            reader = csv.reader(file)
-            next(reader)
-            for row in reader:
-                print(row[0])
-                correctlist.append({'items':row[0],'completion status':row[1]})
-            return correctlist
-     
 def remove(item):
     correctlist = []
-    with open("to do list/list.csv","r") as file:
-            reader = csv.reader(file)
-            next(reader)
-            for row in reader:
-                print(row)
-                if row[0] != item:
-                   correctlist.append({'items':row[0],'completion status':row[1]})
+    with open("to do list/list.txt","r") as file:
+            reader = file.read()
+            words=""
+            for letter in reader:
+                if letter=='\n':
+                    if item not in words: 
+                        correctlist.append(words)
+                    else: pass
+                    words=""
+                else:
+                    words=words+letter
             write(correctlist)
             return
 
 def add(item):
-    with open("to do list/list.csv","a") as file:
-         writer = csv.writer(file)
-         writer.writerow([item,''])
-    return
+    correctlist=[]
+    with open("to do list/list.txt","r") as file:
+            reader = file.read()
+            words=""
+            for letter in reader:
+                if letter=='\n':
+                    correctlist.append(words)
+                    words=""
+                else:
+                    words=words+letter
+            correctlist.append(item)
+            write(correctlist)
+            return
 
 def complete(item):
-    correctlist=[]
-    with open("to do list/list.csv","r") as file:
-            reader = csv.reader(file)
-            next(reader)
-            for row in reader:
-                print(row)
-                if row[0] != item:
-                   correctlist.append({'items':row[0],'completion status':row[1]})
+    correctlist = []
+    with open("to do list/list.txt","r") as file:
+            reader = file.read()
+            words=""
+            for letter in reader:
+                if letter=='\n':
+                    if item in words:
+                        correctlist.append(f"{words} X")
+                    else: 
+                        correctlist.append(words)
+                    words=""
                 else:
-                   correctlist.append({'items':row[0],'completion status':'X'})  
+                    words=words+letter
             write(correctlist)
             return
 
@@ -98,23 +90,19 @@ def main():
                         '''))
         if choose2 == 1: #display
             display()
+            main()
         elif choose2 == 2: #add
-            item = input('what would you like to add?')
+            item = input('what would you like to add?\n')
             add(item)
+            main()
         elif choose2 == 3: #remove
-            number = input('what do you want to remove?')
-            valid = check(number)
-            if valid == True:
-                write(remove(number))
-            else:
-                print('not an item in the list')
-                
-
+            number = input('what do you want to remove?\n')
+            remove(number)
+            main()
         elif choose2 == 4: #mark as complete
-            valid = False
-            number = input('what do you want to complete?')
+            number = input('what do you want to complete?\n')
             complete(number)
-            
+            main()
             
         elif choose2 == 5: #exit
             return
@@ -124,9 +112,8 @@ def main():
     except: 
         print('not a number')
         main()
+    
 
+#write(['wash dishes','clean room','fold laundry X'])
 
-display()
-remove('mow lawn')
-display()
 main()
