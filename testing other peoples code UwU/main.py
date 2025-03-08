@@ -1,6 +1,5 @@
-import csv
-with open("to do list/list.csv","r") as file:
-            reader = csv.reader(file)
-            next(reader)
-            for row in reader:
-                print(row)
+dictionary={1:2,3:4}
+for x in dictionary.values():
+    for y in dictionary:
+        if dictionary[y]==x:
+                print(y)
