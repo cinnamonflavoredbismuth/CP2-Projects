@@ -6,3 +6,4 @@ def options(list):
 def print_lots(list):
     for x in list:
         print(x)
+

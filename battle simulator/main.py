@@ -44,63 +44,94 @@ Implement a more complex battle system with multiple characters per side (3 poin
 from battle import fakemon
 from battle import main as fight
 from char_handling import new_char
-from char_handling import edit_char
 from char_handling import export_char
 from char_handling import display_chars
+from char_handling import random_char
 from helper_functions import options
 
+def new_game():
+    input("hello, I am dr. Tree, the valleys one and only reputable professor (press enter to continue text)")
+    name=input("what is your name?\n")
+    input("you have just reached the ripe old age of ten, you know what that means?")
+    input("you own a monster and get to fend for yourself on your own!")
+    input("isn't that fun?")
+    input("now, as for your monster, you were here first! so you get to choose")
+    input("do you want a:")
+    def check():
+        options(['satan','george w bush','fish'])
+        try:
+            choice=int(input())
+            if choice==1:
+                return'satan'
+                
+            elif choice==2:
+                return'george w bush'
+            elif choice==3:
+                return'fish'
+            elif choice==4:
+                input("wow, you really do think you're the main character, huh")
+                input("well, you're right!")
+                input("you get pikachu!")
+                return'pikachu'
+            else: input("not an option, buddy [ERROR with FAKEMON SELECTION]")
+            check()
+        except: input('thats not even a number [ERROR with FAKEMON SELECTION]')
+        check()
+    fakemon=check()
+    input("now, since you are 10, you suck at basically everything")
+    input("but don't worry!")
+    input("your fakemon does too!")
+    input("you start at level 0 for most everything")
+    character={'name':name,'xp':0,'lvl':0,'fakemon':fakemon,'hp':5,'str':0,'def':1,'spd':1}
+    print(f"name: {character['name']}, lvl: {character['lvl']}, xp: {character['xp']}, fakemon: {character['fakemon']}, hp: {character['hp']}, str: {character['str']}, def: {character['def']}, spd: {character['spd']}")
+    input("but do not fret!")
+    input("you can still level up by battling!")
+    input("Well, thats it for me")
+    print("bye!")
+    
+    return character
 
-
-def main_menu():
+def main(fakemon):
     print("would you like to:")
-    options(["load game","start new game","see all players"])
+    options(["new character","single player","two player","see all players","Exit"])
     try:
         choose=int(input())
         if choose == 1:
-            name=input("what is the name of your character?")
-            player=export_char(name)
-            if player==False: 
-                print("your character is not in the list, make a new one?")
-                main_menu()
+            new_char(new_game())
+            main(fakemon)
         elif choose == 2:
-            new_game()
-        elif choose == 3:
+            p1=export_char(input("what is the name of your character?"))
+            if p1==False: 
+                print("your character is not in the list, make a new one?")
+                main(fakemon)
+            else:
+                bot=random_char()
+                fight(p1,bot,p1,bot,fakemon,False,True)
+                main(fakemon)
+        elif choose == 2:
+            p1=export_char(input("what is the name of your character?"))
+            if p1==False: 
+                print("your character is not in the list, make a new one?")
+                main(fakemon)
+            else:
+                p2=export_char(input("what is the name of your character?"))
+                if p2==False: 
+                    print("your character is not in the list, make a new one?")
+                    main(fakemon)
+                else:
+                    fight(p1,p2,p1,p2,fakemon,False,False)
+                    main(fakemon)
+        elif choose == 4:
             display_chars()
-        else: print('not one of the listed options')
-
+            input()
+            main(fakemon)
+        elif choose == 5:
+            return
+        else: 
+            print('not one of the listed options [ERROR with MAIN]') 
+            main(fakemon)
     except:
-        print("thats not a number")
-        main_menu()
-def game():
-    pass
-def new_game():
-    print("hello, I am dr. Tree, the valleys one and only reputable professor")
-    name=input("what is your name?")
-    print("you have just reached the ripe old age of ten, you know what that means?")
-    print("you get a monster and get to fend for yourself on your own!")
-    print("isn't that fun?")
-    print("now, as for your monster, you were here first! so you get to choose")
-    print("do you want a:")
-    options(['satan','george w bush','fish'])
-    try:
-        choice=int(input())
-        if choice==1:
-            fakemon='satan'
-        elif choice==2:
-            fakemon='george w bush'
-        elif choice==3:
-            fakemon='fish'
-        elif choice==4:
-            print("wow, you really do think you're the main character, huh")
-            print("well, you're right!")
-            print("you get pikachu!")
-            fakemon='pikachu'
-        else: print("not an option, buddy")
-    except: print('thats not even a number, dumbass')
-    print("now, since you are 10, you suck at basically everything")
-    print("but don't worry!")
-    print("your fakemon does too!")
-    print("you start at level 0 for basically everything")
-    character={'name':name,'xp':0,'lvl':0,'fakemon':fakemon,'hp':5,'str':0,'def':1,'spd':1}
-    print("but do not fret!")
-    print("you can still ")
+        print("thats not a number [ERROR with MAIN]")
+        main(fakemon)
+
+main(fakemon)
