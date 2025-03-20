@@ -96,10 +96,10 @@ def main(fakemon):
     options(["new character","single player","two player","see all players","Exit"])
     try:
         choose=int(input())
-        if choose == 1:
+        if choose == 1: #new character
             new_char(new_game())
             main(fakemon)
-        elif choose == 2:
+        elif choose == 2: #single player
             p1=export_char(input("what is the name of your character?"))
             if p1==False: 
                 print("your character is not in the list, make a new one?")
@@ -108,7 +108,7 @@ def main(fakemon):
                 bot=random_char()
                 fight(p1,bot,p1,bot,fakemon,False,True)
                 main(fakemon)
-        elif choose == 2:
+        elif choose == 3: #two player
             p1=export_char(input("what is the name of your character?"))
             if p1==False: 
                 print("your character is not in the list, make a new one?")
@@ -121,11 +121,11 @@ def main(fakemon):
                 else:
                     fight(p1,p2,p1,p2,fakemon,False,False)
                     main(fakemon)
-        elif choose == 4:
+        elif choose == 4: #see all players
             display_chars()
             input()
             main(fakemon)
-        elif choose == 5:
+        elif choose == 5: #exit
             return
         else: 
             print('not one of the listed options [ERROR with MAIN]') 
@@ -134,4 +134,7 @@ def main(fakemon):
         print("thats not a number [ERROR with MAIN]")
         main(fakemon)
 
-main(fakemon)
+p1=export_char("Cecily")
+bot=random_char()
+fight(p1,bot,p1,bot,fakemon,False,True)
+#main(fakemon)

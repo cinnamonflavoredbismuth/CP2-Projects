@@ -79,7 +79,7 @@ def all_chars():
             char[row[0]]=({'lvl':row[1],'xp':row[2],"fakemon":row[3],"hp":row[4],"str":row[5],'def':row[6],'spd':row[7]})
 
 def random_char():
-    bot={"name":fake.name(),'lvl':random.randint(1,10),'xp':random.randint(1,10),"fakemon":random.choice(['satan','george w bush','fish']),"hp":random.randint(5,20),"str":random.randint(1,10),'def':random.randint(1,10),'spd':random.randint(1,10)}
+    bot={fake.name():{'lvl':random.randint(1,10),'xp':random.randint(1,10),"fakemon":random.choice(['satan','george w bush','fish']),"hp":random.randint(5,20),"str":random.randint(1,10),'def':random.randint(1,10),'spd':random.randint(1,10)}}
     return bot
 
 def display_chars():
