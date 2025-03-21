@@ -43,11 +43,9 @@ Add status effects (e.g. poison, stun, frozen) to the battle system
 Implement a more complex battle system with multiple characters per side (3 points)"""
 from battle import fakemon
 from battle import main as fight
-from char_handling import new_char
-from char_handling import export_char
-from char_handling import display_chars
-from char_handling import random_char
+from char_handling import *
 from helper_functions import options
+import pandas as pd
 
 def new_game():
     input("hello, I am dr. Tree, the valleys one and only reputable professor (press enter to continue text)")
@@ -93,14 +91,14 @@ def new_game():
 
 def main(fakemon):
     print("would you like to:")
-    options(["new character","single player","two player","see all players","Exit"])
+    options(["new character","single player","two player","see all players","see chart for character stats","statistical anylysis for your character","Exit"])
     try:
         choose=int(input())
         if choose == 1: #new character
             new_char(new_game())
             main(fakemon)
         elif choose == 2: #single player
-            p1=export_char(input("what is the name of your character?"))
+            p1=export_char(input("what is the name of your character?\n"))
             if p1==False: 
                 print("your character is not in the list, make a new one?")
                 main(fakemon)
@@ -109,12 +107,12 @@ def main(fakemon):
                 fight(p1,bot,p1,bot,fakemon,False,True)
                 main(fakemon)
         elif choose == 3: #two player
-            p1=export_char(input("what is the name of your character?"))
+            p1=export_char(input("what is the name of your character?\n"))
             if p1==False: 
                 print("your character is not in the list, make a new one?")
                 main(fakemon)
             else:
-                p2=export_char(input("what is the name of your character?"))
+                p2=export_char(input("what is the name of your character?\n"))
                 if p2==False: 
                     print("your character is not in the list, make a new one?")
                     main(fakemon)
@@ -133,8 +131,7 @@ def main(fakemon):
     except:
         print("thats not a number [ERROR with MAIN]")
         main(fakemon)
-
-p1=export_char("Cecily")
-bot=random_char()
-fight(p1,bot,p1,bot,fakemon,False,True)
-#main(fakemon)
+d = {'col1': [1, 2], 'col2': [3, 4]}
+print(all_chars())
+print(pd.DataFrame(data=d))
+# main(fakemon)

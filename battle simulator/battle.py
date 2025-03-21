@@ -1,8 +1,6 @@
 #Cecily Strong Battle Simulator Level Handling
 from helper_functions import options
-from char_handling import edit_char
-from char_handling import random_char
-from char_handling import export_char
+from char_handling import *
 import random
 char1=random_char()
 char2=random_char()
@@ -54,50 +52,59 @@ def attack(p,spd,mltp,defe,str,type):
         mltp=int(mltp) #multiplier AKA level
         defe=int(defe) #defense
         #basically, this is choosing a random number between your speed +x and -x, and adding or subracting the appropriate number if your fakemon is effective to the type or weak to the type
-        atk_num = random.randrange(spd-mltp,spd+mltp)+type
+        if spd-mltp==spd+mltp:
+            atk_num=spd-mltp
+        else:
+            atk_num = random.randrange(spd-mltp,spd+mltp)+type
         landed = (mltp*(1/3))+spd #this is to check if it landed at all
         super_effective=mltp*(2/3)+spd #this is to see if its super effective!
         if atk_num < defe: #doesn't land :(
-            return p['hp'],"it did not land!"
+            return p[list(p.keys())[0]]['hp'],"it did not land!"
         elif atk_num >= defe:
             if atk_num < landed: #didnt land
-                p['hp'] = int(p['hp'])-(int(str)*(2/3)+int(type)) #subtracts the damage it dealt
-                return p['hp'],'it landed!'
+                p[list(p.keys())[0]]['hp'] = int(p[list(p.keys())[0]]['hp'])-(int(str)*(2/3)+int(type)) #subtracts the damage it dealt
+                return p[list(p.keys())[0]]['hp'],'it landed!'
             elif atk_num >= super_effective: #super effective
-                p['hp'] = int(p['hp'])-(int(str)*3/2+int(type)) #subtracts the damage it dealt
-                return p['hp'],("it was super effective!")
+                p[list(p.keys())[0]]['hp'] = int(p[list(p.keys())[0]]['hp'])-(int(str)*3/2+int(type)) #subtracts the damage it dealt
+                return p[list(p.keys())[0]]['hp'],("it was super effective!")
             else: #normal attack
-                p['hp'] = int(p['hp'])-(int(str)+int(type)) #subtracts the damage it dealt
-                return p['hp'],("it was effective!")
+                p[list(p.keys())[0]]['hp'] = int(p[list(p.keys())[0]]['hp'])-(int(str)+int(type)) #subtracts the damage it dealt
+                return p[list(p.keys())[0]]['hp'],("it was effective!")
         
 def heal(char1,spd,mltp,defe,str,type):
         spd=int(spd)
         mltp=int(mltp)
         defe=int(defe)
-        atk_num = random.randrange(spd-mltp,spd+mltp)+type
+        if spd-mltp==spd+mltp:
+            atk_num==spd-mltp
+        else:
+            atk_num = random.randrange(spd-mltp,spd+mltp)+type
         landed = (mltp*(1/3))+spd
         super_effective=mltp*(2/3)+spd
         if atk_num < defe: #doesn't land :(
-            return char1['hp'],"it did not work!"
+            return char1[char1[list(p1.keys())[0]]]['hp'],"it did not work!"
         elif atk_num >= defe:
             if atk_num<landed:
                 
-                char1['hp']=int(char1['hp'])+(str*(2/3)+type)
-                return char1['hp'],'it worked!'
+                char1[char1[list(p1.keys())[0]]]['hp']=int(char1[char1[list(p1.keys())[0]]]['hp'])+(str*(2/3)+type)
+                return char1[char1[list(p1.keys())[0]]]['hp'],'it worked!'
             elif atk_num>=super_effective:
-                char1['hp']+=(str*3/2+type)
-                return char1['hp'],"it was super effective!"
+                char1[char1[list(p1.keys())[0]]]['hp']+=(str*3/2+type)
+                return char1[char1[list(p1.keys())[0]]]['hp'],"it was super effective!"
 
             else:
-                char1['hp']+=(str+type)
-                return char1['hp'],"it was effective!"
+                char1[char1[list(p1.keys())[0]]]['hp']+=(str+type)
+                return char1[char1[list(p1.keys())[0]]]['hp'],"it was effective!"
 
 def run(spd,mltp,type,p2_defe):
         spd=int(spd)
         mltp=int(mltp)
         type=int(type)
         p2_defe=int(p2_defe)
-        run_num = random.randrange(spd-mltp,spd+mltp)+type
+        if spd-mltp==spd+mltp: #prevents range of none
+            run_num==spd-mltp
+        else:
+            run_num = random.randrange(spd-mltp,spd+mltp)+type
         if run_num < p2_defe:
             return False, "it did not work!"
         else:
@@ -121,40 +128,41 @@ def turn(p1,p2,fakemon,bot):
     elif fakemon[p1[list(p1.keys())[0]]['fakemon']]['type'] in fakemon[p2[list(p2.keys())[0]]['fakemon']]['weakness']:
         type = -2
     else:
-        type=0
+        type = 0
 
     if bot==True: #is the player a bot? Its more likely than you think
-            x==random.randint(1,len(choices)-1) #pick a random choice! it might not be staregically the best but bots don't care
+            f = 2 #random.randint(1,len(choices)-1) #pick a random choice! it might not be staregically the best but bots don't care
     else:
         options(choices_stats)
         try:
-            x = int(input(''))
+            f = int(input(''))
         except:print('not an integer')
 
-    if choices[x-1] in attacks: #this is the attack that it does!
-        str=int(char1['str'])+int(fakemon[p1[list(p1.keys())[0]]['fakemon']]['attacks'][attacks[attacks.index(choices[x-1])]]) #this is how much strength each fakemon has for the attack. basically base damage
-        input(f"{p1[list(p1.keys())[0]]['fakemon']} used {choices[x-1]}!") #displays that the fakemon did an attack
+    if choices[f-1] in attacks: #this is the attack that it does!
+        
+        str=int(p1[list(p1.keys())[0]]['str'])+int(fakemon[p1[list(p1.keys())[0]]['fakemon']]['attacks'][attacks[attacks.index(choices[f-1])]]) #this is how much strength each fakemon has for the attack. basically base damage
+        input(f"{p1[list(p1.keys())[0]]['fakemon']} used {choices[f-1]}!") #displays that the fakemon did an attack
         list1 = attack(p2,p1[list(p1.keys())[0]]['spd'],p1[list(p1.keys())[0]]['lvl'],p1[list(p1.keys())[0]]['def'],str,type) 
         input(list1[1])#message of effectiveness
         p2[list(p2.keys())[0]]['hp']=list1[0] #changes hp
         return p2
 
-    elif choices[x-1] in heals:
-        str=int(char1['str'])+int(fakemon[p1[list(p1.keys())[0]]['fakemon']]['heal'][heals[heals.index(choices[x-1])]]) #base heals for pokemon
-        input(f"{p1[list(p1.keys())[0]]['fakemon']} used {choices[x-1]}!") #displays that the fakemon did a thing
+    elif choices[f-1] in heals:
+        str=int(p1[list(p1.keys())[0]]['str'])+int(fakemon[p1[list(p1.keys())[0]]['fakemon']]['heal'][heals[heals.index(choices[f-1])]]) #base heals for pokemon
+        input(f"{p1[list(p1.keys())[0]]['fakemon']} used {choices[f-1]}!") #displays that the fakemon did a thing
         list1 = heal(p1,p1[list(p1.keys())[0]]['spd'],p1[list(p1.keys())[0]]['lvl'],p1[list(p1.keys())[0]]['def'],str,type) 
         input(list1[1])#message of effectiveness
         p1[list(p1.keys())[0]]['hp']=list1[0] #changes hp
         return p1
         
-    elif choices[x-1]=="FLEE: run away":
+    elif choices[f-1]=="FLEE: run away":
         input(f"{p1[list(p1.keys())[0]]['fakemon']} used {'run away'}!")
         list1 = run(p1[list(p1.keys())[0]]['spd'],p1[list(p1.keys())[0]]['lvl'],type,p2[list(p2.keys())[0]]['def'])
         input(list1[1])
         run_away=list1[0] #if the thing worked, then this is how the program knows
         return run_away
         
-    elif choices[x-1]=="EXIT: main menu":
+    elif choices[f-1]=="EXIT: main menu":
         return True
         #Failsafe. maybe ill put back later
         print("are you sure you want to go to the main menu?")
@@ -171,7 +179,7 @@ def turn(p1,p2,fakemon,bot):
     
 
 def level_up(p):
-    p['xp']=int(p['xp'])+random.randint(1,3) #xp gathering
+    p[list(p.keys())[0]]['xp']=int(p[list(p.keys())[0]]['xp'])+random.randint(1,3) #xp gathering
     
     input("what do you want to upgrade?") #upgrading individual stats
     choices=['hp','str','def','spd']
@@ -184,25 +192,25 @@ def level_up(p):
             p[choices[choose-1]]=int(p[choices[choose-1]])+1
     except:print('not a number [ERROR with LEVEL_UP]')    
 
-    if int(p['xp'])==int(p['lvl'])*1.2: #leveling up
-        p['xp']=0
-        input(f"Your {p['fakemon']} Leveled up!")
-        p['lvl']=int(p['lvl'])+1
+    if int(p[list(p.keys())[0]]['xp'])==int(p[list(p.keys())[0]]['lvl'])*1.2: #leveling up
+        p[list(p.keys())[0]]['xp']=0
+        input(f"Your {p[list(p.keys())[0]]['fakemon']} Leveled up!")
+        p[list(p.keys())[0]]['lvl']=int(p[list(p.keys())[0]]['lvl'])+1
 
     edit_char(p,1)
     return p
 
 def main(p1,p2,char1,char2,fakemon,bot1,bot2): #P1 is the current player, p2 is the other player, chars 1 and 2 are just staying the same for continuity reasons (who challenged who, ect), bot1 and bot2 are used to ask if player 1 or player two are a bot. theoretically, you could have two bots against each other, or 2 in person players. wild, huh
     # Shows all player stats
-    print(p1[list(p1.keys())[0]])
-    input(f"You have encountered a wild {char2[list(char2.keys())[0]]}!")
+    input(f"You have encountered a wild {list(char2.keys())[0]}!")
     input(f"""Opponent stats:
 fakemon:{char2[list(char2.keys())[0]]['fakemon']}
 lvl: {char2[list(char2.keys())[0]]['lvl']}
-hp: {char2[list(char2.keys())[0]]['hp']}""")
-    input(f"""Your Stats:
+hp: {int(char2[list(char2.keys())[0]]['hp'])}""")
+    input(f"""
+Your Stats:
 lvl: {char1[list(char1.keys())[0]]['lvl']}
-hp: {char1[list(char1.keys())[0]]['hp']}""")
+hp: {int(char1[list(char1.keys())[0]]['hp'])}""")
     
     def check(p1,p2): #this just checks if any of the fakemons hp is under 0
         if int(p1[list(p1.keys())[0]]['hp']) <= 0:
@@ -216,13 +224,13 @@ hp: {char1[list(char1.keys())[0]]['hp']}""")
         print(lose[2],lose[3])
         return
     else:
-        exit=turn(p1,p2,fakemon,bot1,bot2) #actual fight function
+        exit=turn(p1,p2,fakemon,bot1) #actual fight function
         if exit==True: #this is just to be safe
             return 
         else:
             main(p2,p1,char1,char2,fakemon,bot2,bot1) #runs program again
 
-#main(char1,char2,char1,char2,fakemon,False,True) #testing function
+
 p1=export_char("Cecily")
 bot=random_char()
-main(p1,bot,p1,bot,fakemon,False,True)
+#main(p1,bot,p1,bot,fakemon,False,True)

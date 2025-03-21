@@ -2,6 +2,7 @@
 #Functions: 1 Edit, 2 Delete
 import csv
 from helper_functions import options
+import pandas as pd
 from faker import Faker
 fake=Faker()
 import random 
@@ -76,8 +77,12 @@ def all_chars():
         reader = csv.reader(file)
         next(reader)
         for row in reader:
+            print(row)
+            print(row[1])
             char[row[0]]=({'lvl':row[1],'xp':row[2],"fakemon":row[3],"hp":row[4],"str":row[5],'def':row[6],'spd':row[7]})
-
+            print(char)
+        return char
+print(all_chars())
 def random_char():
     bot={fake.name():{'lvl':random.randint(1,10),'xp':random.randint(1,10),"fakemon":random.choice(['satan','george w bush','fish']),"hp":random.randint(5,20),"str":random.randint(1,10),'def':random.randint(1,10),'spd':random.randint(1,10)}}
     return bot
