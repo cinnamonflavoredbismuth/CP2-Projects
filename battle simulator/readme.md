@@ -16,12 +16,13 @@ REMINDER: Show what the project looks like while running)
 
 ## Used technologies
 ___
-+ First Library
-`pip install code for library`
-+ Second Library
-`pip install code for library`
-+ Third Library
-`pip install code for library`
++ pandas
+`pip install pandas`
++ faker
+`pip install Faker`
++ MatPlotLib
+`python -m pip install -U pip`
+`python -m pip install -U matplotlib`
 + Fourth Library
 `pip install code for library`  
 

@@ -1,61 +1,16 @@
 #Cecily Strong Battle Simulator
-"""Character Creation and Management:
-
-Create new characters with attributes (name, health, strength, defense, speed)
-Save characters to a CSV file
-Load characters from a CSV file
-Display character information
-
-Battle System:
-
-Implement a turn-based battle system between two characters
-Calculate damage based on character attributes
-Include a simple leveling system where characters gain experience after battles
-
-Program Structure:
-
-Use inner functions for main features (character creation, battle system, menu)
-Implement helper functions for repetitive tasks (save/load, display character info)
-Create a main menu for user interaction
-
-File Operations:
-
-Save character data to a CSV file
-Load character data from a CSV file
-
-Additional Features (Optional): (NOTE: only awarded IF all 20 of the required points are earned, they cannot make up for lost points)
-
-Implement character classes (warrior, mage, rogue) with unique attributes 
-Implementation of basic character classes (e.g. warrior, mage, rouge) with slight variations in starting attributes (1 point)
-Implement character classes with unique abilities or skills (2 points)
-
-Add a simple inventory system 
-Allow characters to hold items (1 point)
-Inventory with equippable items that affect character stats (2 points)
-Advanced inventory system with item crafting or combining (3 points)
-
-Create special abilities for characters
-Implement one or two special abelites for characters (1 point)
-Implement a diverse set of special abilities that significantly impact battles (2 points)
-
-Enhanced Battle System
-Add status effects (e.g. poison, stun, frozen) to the battle system
-Implement a more complex battle system with multiple characters per side (3 points)"""
 from battle import fakemon
 from battle import main as fight
 from char_handling import *
-from helper_functions import options
-import pandas as pd
+from helper_functions import *
 
 def new_game():
     input("hello, I am dr. Tree, the valleys one and only reputable professor (press enter to continue text)")
     name=input("what is your name?\n")
-    input("you have just reached the ripe old age of ten, you know what that means?")
-    input("you own a monster and get to fend for yourself on your own!")
-    input("isn't that fun?")
-    input("now, as for your monster, you were here first! so you get to choose")
-    input("do you want a:")
+    txt=["you have just reached the ripe old age of ten, you know what that means?","you own a monster and get to fend for yourself on your own!","isn't that fun?","now, as for your monster, you were here first! so you get to choose"]
+    print_lots(txt)
     def check():
+        print("do you want a:")
         options(['satan','george w bush','fish'])
         try:
             choice=int(input())
@@ -76,22 +31,21 @@ def new_game():
         except: input('thats not even a number [ERROR with FAKEMON SELECTION]')
         check()
     fakemon=check()
-    input("now, since you are 10, you suck at basically everything")
-    input("but don't worry!")
-    input("your fakemon does too!")
-    input("you start at level 0 for most everything")
-    character={'name':name,'xp':0,'lvl':0,'fakemon':fakemon,'hp':5,'str':0,'def':1,'spd':1}
+    txt=["now, since you are 10, you suck at basically everything","but don't worry!","your fakemon does too!","you start at level 0 for most everything"]
+    print_lots(txt)
+    character={'name':name,'xp':0,'lvl':1,'fakemon':fakemon,'hp':5,'str':0,'def':1,'spd':1}
     print(f"name: {character['name']}, lvl: {character['lvl']}, xp: {character['xp']}, fakemon: {character['fakemon']}, hp: {character['hp']}, str: {character['str']}, def: {character['def']}, spd: {character['spd']}")
-    input("but do not fret!")
-    input("you can still level up by battling!")
-    input("Well, thats it for me")
-    print("bye!")
+    txt=["but do not fret!","you can still level up by battling!","Well, thats it for me"]
+    print_lots(txt)
     
     return character
 
+
+
 def main(fakemon):
+    print("FAKEMON: THE GAME\n")
     print("would you like to:")
-    options(["new character","single player","two player","see all players","see chart for character stats","statistical anylysis for your character","Exit"])
+    options(["new character","single player","two player","see all players","see chart for character stats","statistical anylysis for your character", "statistical analysis of all characters","Exit"])
     try:
         choose=int(input())
         if choose == 1: #new character
@@ -120,10 +74,28 @@ def main(fakemon):
                     fight(p1,p2,p1,p2,fakemon,False,False)
                     main(fakemon)
         elif choose == 4: #see all players
-            display_chars()
-            input()
+            input(frame_chars())
             main(fakemon)
-        elif choose == 5: #exit
+        elif choose == 5: #graph
+            p=export_char(input("what is the name of your character?\n"))
+            if p==False: 
+                print("your character is not in the list, make a new one?")
+                main(fakemon)
+            else:
+                chart(p)
+                main(fakemon)
+        elif choose == 6: #statisical anylisis
+            p=export_char(input("what is the name of your character?\n"))
+            if p==False: 
+                print("your character is not in the list, make a new one?")
+                main(fakemon)
+            else:
+                input(mmm_char(p))
+                main(fakemon)
+        elif choose == 7: #all characters statistics
+            input(frame_mmm())
+            main(fakemon)
+        elif choose == 8: #exit
             return
         else: 
             print('not one of the listed options [ERROR with MAIN]') 
@@ -131,7 +103,5 @@ def main(fakemon):
     except:
         print("thats not a number [ERROR with MAIN]")
         main(fakemon)
-d = {'col1': [1, 2], 'col2': [3, 4]}
-print(all_chars())
-print(pd.DataFrame(data=d))
-# main(fakemon)
+
+main(fakemon)
