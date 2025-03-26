@@ -1,2 +1,11 @@
 country,coin-amount
-usa,penny-0.01,nickel-0.05,dime-0.10,quarter-0.25
+usd,penny-0.01,nickel-0.05,dime-0.1,quarter-0.25,one dollar bill-1.0,five dollar bill-5.0,twenty dollar bill-20.0,one hundred dollar bill-100.0
+eur,1c-0.01,2c-0.02,5c-0.05,10c-0.1,20c-0.2,50c-0.5,
+jpy,1 yen-1.0,5 yen-5.0,10 yen-10.0,50 yen-50.0,100 yen-100.0,1000 yen-1000.0
+gbp,1 penny-0.01,2 pence-0.02,5 pence-0.05,10 pence-0.10,20 pence-0.20,50 pence-0.50,1 pound-1.0,2 pounds-2.0
+aud,5 cents - 0.05,10 cents - 0.1,20 cents - 0.2,50 cents - 0.5,1 dollar - 1.0,2 dollars - 2.0,5 dollar bill - 5.0,10 dollar bill - 10.0,20 dollar bill - 20.0,50 dollar bill - 50.0,100 dollar bill - 100.0
+cad,5 cents - 0.05,10 cents - 0.1,25 cents - 0.25,1 dollar - 1.0,2 dollars - 2.0,5 dollar bill - 5.0,10 dollar bill - 10.0,20 dollar bill - 20.050 dollar bill - 50.0,100 dollar bill - 100.0
+chf,5 rappen - 0.05,10 rappen - 0.1,20 rappen - 0.2,50 rappen - 0.5,1 franc - 1.0,2 francs - 2.0,5 franc bill - 5.0,10 franc bill - 10.0,20 franc bill - 20.0,50 franc bill - 50.0,100 franc bill - 100.0
+cnh,1 jiao - 0.1,5 jiao - 0.5,1 yuan - 1.0,5 yuan - 5.0,10 yuan - 10.0,20 yuan - 20.0,50 yuan - 50.0,100 yuan - 100.0
+hkd,10 cents - 0.10,20 cents - 0.20,50 cents - 0.50,1 dollar - 1.0,2 dollars - 2.0,5 dollar bill - 5.0,10 dollar bill - 10.0,20 dollar bill - 20.0,50 dollar bill - 50.0,100 dollar bill - 100.0
+nzd,10 cents - 0.10,20 cents - 0.20,50 cents - 0.50,1 dollar - 1.0,2 dollars - 2.0,5 dollar bill - 5.0,10 dollar bill - 10.0,20 dollar bill - 20.0,50 dollar bill - 50.0,100 dollar bill - 100.0

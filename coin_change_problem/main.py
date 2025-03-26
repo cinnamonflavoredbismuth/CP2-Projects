@@ -27,7 +27,7 @@ def debug():
 
         return trace_calls
     sys.settrace(trace_calls)
-    tracer=trace.Trace(count=False,trace=True)
+
 def coins_dict():
     with open("coin_change_problem\coin_denomination.csv","r",newline='') as file:
         coins={}
@@ -35,7 +35,7 @@ def coins_dict():
         next(reader)
         for row in reader:
             coins[row[0]]=row[1:]
-            return coins
+        return coins
 
 def country_coins(country):
     with open("coin_change_problem\coin_denomination.csv","r",newline='') as file:
@@ -58,20 +58,47 @@ def split_coins(coins):
         coins[x]=dic
     return coins
 
-
-
 def coin_change(country,amount):
     amount=float(amount)
     coins=split_coins(country_coins(country))
-    print(coins)
     keys=[]
-    for x in list(coins['usa'].keys()):
+    for x in list(coins[country].keys()):
         keys.append(float(x))
     keys.sort(reverse=True)
     coins_list=[]
     for x in keys:
         div=amount//x
-        amount=amount-div
-        coins_list.append(f'{div} {coins[str(x)]}(s)')
+        amount=amount-div*x
+        if amount>div*x and x == keys[len(keys)-1]:
+            div+=1
+        coins_list.append(f'{int(div)} {coins[country][str(x)]}(s)')
     return coins_list
-print(coin_change('usa',5.30))
+
+def main():
+    countries=list(coins_dict().keys())
+    print("Welcome to the coin change problem")
+    print('these are all the currencies:')
+    for x in countries:
+        print(f'    {x}')
+    country=input("what is your currency (use their 3 letter abreviations)?\n")
+    if country.lower() in countries:
+        try:
+            amount=float(input("How much money do you want to convert to change (go to 2 decimal places)?\n"))
+            if amount>0:
+                coins=coin_change(country,amount)
+                for x in coins:
+                    print(x)
+                return
+            else:
+                print('invalid number')
+                
+        except:
+            print('not a number')
+            
+    else:
+        print("invalid country")
+    main()
+
+
+
+main()
