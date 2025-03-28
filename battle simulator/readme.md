@@ -2,7 +2,7 @@
 
 ## Project Description
 ___
-Paragraph describing the purpose of your project and what it does.  
+The Battle Simulater is a basic fight game, where you can choose to battle other players or just bots to level up. It runs in the terminal and uses humerous attack names and exciting battle systems to make it more entertaining.
 
 ## Installation
 ___
@@ -10,7 +10,7 @@ Not used for this class
 
 ## Execution and usage
 ___
-Paragraph describing how to use the project
+Run the program and press the number of which item you want to do when prompted.
 ![image](relative path to image NOTE: Image has to be saved in the repository
 REMINDER: Show what the project looks like while running)  
 
@@ -28,9 +28,9 @@ ___
 
 ## Current Features
 ___
-+ First feature I am proud of
-+ Second feature I am proud of
-+ Third feature I am proud of  
++ Character creation
++ One player and two player fight modes
++ Stats saving
 
 ## Contributions
 ___
@@ -38,14 +38,12 @@ Not used for this class
 
 ## Contributers
 ___
-+ Person who helped - what they did
-+ Person who helped - what they did
-+ Person who helped - what they did  
++ Jeremy Strong - Helped me find bugs in code
 
 ## Author's Information
 ____
-Short paragraph about you (each memeber of the group)
-Potentially has contact information  
+Cecily Strong
+I am an ametuer programmer with an interest in learning more. I love math and solving puzzles, and intend to apply these interests in my programs. I have been programming for around a year and have graduated a CS 1400 class.
 
 ## Change log
 ___
