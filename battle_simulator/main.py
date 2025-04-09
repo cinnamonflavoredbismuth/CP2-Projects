@@ -104,4 +104,41 @@ def main(fakemon):
         print("thats not a number [ERROR with MAIN]")
         main(fakemon)
 
-main(fakemon)
+def main2():
+    fakemon={
+    'satan':{'type': 'fire',
+            'weakness':'water',
+            'attacks':{
+                 'antichrist':2,
+                 'gay people':3},
+            'heal':{
+                'sin, cos, tan':2
+            }},
+    'george w bush':{'type': 'grass',
+            'weakness':['fire','electric'],
+            'attacks':{
+                 'destroy pipeline':2,
+                 'legislate':3},
+            'heal':{
+                'veganize':2
+            }},
+    'fish':{'type':'water',
+            'weakness':['grass','electric'],
+            'attacks':{
+                 'squirt':2,
+                 'BONES':3},
+            'heal':{
+                'hydrate':2
+    
+            }},
+            
+    'pikachu':{'type': 'electric',
+            'weakness':'fire',
+            'attacks':{
+                 'kill god':3,
+                 'copyright strike':4},
+            'heal':{
+                'main character syndrome':3
+            }},
+}
+    main(fakemon)

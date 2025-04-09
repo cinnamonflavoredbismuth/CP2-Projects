@@ -1,4 +1,4 @@
-#Cecily Strong Movie Recommender
+#cecily strong movie reccomender
 """
 requierments:
 Uses the provided Movies list 
@@ -6,36 +6,37 @@ User is able to choose at least 2 filters for the program to search through
 User can get recommendations based on genre, directors, length and/or actors 
 User is able to print the whole list"""
 import csv
-movie = {}
-
-#main setup. muchos importante
-with open("movie_recommender\Movies list.csv") as file:
-    reader = csv.reader(file)
-    next(reader)
-    for row in reader:
-        movie[row[0]] = {
-                        "director":[row[1]],
-                        "genre": row[2],
-                        "rating": [row[3]],
-                        "length": [row[4]],
-                        "notable actors":[row[5]]
-                         }    
-
-#displays the movies
-def display(search,movie):
-    for titles in search: #for filtering to work, instead of using the whole dictionary use just the filtered list
-        print(titles) #prints the title
-        for categories in movie[titles]:
-            print(f"    {categories}: {' '.join(movie[titles][categories])}") #prints each category and whats in it
-
-#making the original filters
-def filters():
+def movies():
+    movie=[]
+    with open("movie_recommender\Movies list.csv") as file:
+        reader = csv.reader(file)
+        next(reader)
+        for row in reader:
+            movie.append({"title":row[0],
+                            "director":row[1],
+                            "genre": row[2],
+                            "rating": row[3],
+                            "length in minutes": row[4],
+                            "notable actor(s)":[row[5]]
+                            })
+    return movie
+def display(movie):
+    for items in movie: #for filtering to work, instead of using the whole dictionary use just the filtered list
+        #print(items)
+        print('--------------------------------')
+        for categories in items:
+            
+            if categories=='notable actor(s)':
+                print(f'{categories}: {" ".join(movie[movie.index(items)][categories])}')
+            else:
+                print(f'{categories}: {(movie[movie.index(items)][categories])}')
+def filter():
     exit = False
     identifiers = ['title','director','genre','rating','length in minutes','notable actor(s)']
-    vars = {'title':[],
-            'director':[],
+    vars = {'title':'',
+            'director':'',
             'genre':'',
-            'rating':[],
+            'rating':'',
             'length in minutes':[],
             'notable actor(s)':[]}
     for x in identifiers:
@@ -62,84 +63,54 @@ def filters():
         vars[x]=item
     return(vars)
 
-#checking all the movies using the filters
-def search(movie,vars):
-    filter = []
-    search = []
-    
-    #                 0        1        2       3        4            5
+def search(filter,movie):
+    search=[]#all movie titles
+    check=True#true/false
+    #print(filter)
     identifiers = ['title','director','genre','rating','length in minutes','notable actor(s)']
-    for titles in movie: #check the title
-        if len(vars['title'])>0: 
-            if (z.lower() for z in vars['title']) in (z.lower() for z in titles):
-                filter.append(True) 
-            else: filter.append(False) #if the filter does not conform to the specification
-        else:
-            filter.append(True)
+    for items in movie:
+        #print(items)
+        check=True
+        #print(items)
+        for x in identifiers:
+            if len(filter[x])>0:
+                for z in filter[x]:
+                    if z in items[x]:
+                        pass
+                    else:
+                        check=False
+        #print(check)
+        #print(check[0:-1])
+        if check==True:
+            search.append(items)
 
-        for x in identifiers[1:5]: #check the director, genre, rating, and length
-            if len(vars[x])>0:
-                for y in vars[x]:
-                    if y.lower() in (z.lower() for z in (movie[titles][x])):
-                        (filter.append(True))
-                    else: (filter.append(False)) #if the filter does not conform to the specification
-            else:
-                filter.append(True)
-        
-        if 0 not in filter: #the falses are for if the movie does not contain all specifications
-            search.append(titles) #adds the movie to the list of the correct results
+    return search
 
-    #This is the final list of all the movies that are within the parameters
-    return(search)
-
-#main interface. lets you choose what to do
-def main(movie):
-    
-    #For testing!!!
-    #"""
-    vars_for_testing = {
-            'title':['Forrest Gump'],
-            'director':['Robert Zemeckis'],
-            'genre':['Drama'],
-            'rating':['pg-a3'],
-            'length in minutes':['140'],
-            'notable actor(s)':['Tim Robbins']}
-    #"""
-
-    stay = True
-    while stay == True: #lets it run for however long you want
+def main(movie,test_mode):
+    stay=True
+    while stay==True:
         try:
-            choice = int(input("""
-Choose the number of what to do
-            1. filter movies
-            2. display all movies
-            3. exit\n"""))
-                
-            if choice == 1: #filter the movies and then display
-                #vars = filters()
-                vars=vars_for_testing
-                filtered = search(movie,vars)
-                print('---------------------------------------')
-                print("The movies that fit this category are...")
-                display(filtered,movie)
-            elif choice == 2: #display all the movies
-                
-                display(movie.keys(),movie)
-            elif choice == 3: #leave
-                return
-            
-        #stupid proofing
+            choose=int(input("""Type the number of what you want:
+                             1. Display all movies
+                             2. filter movies
+                             3. Exit\n"""))
+            if choose==1:
+                display(movie)
+            elif choose==2:
+                if test_mode==False:
+                    display(search(filter(),movie))
+                else:
+                    display(search(movie[1],movie))
+            elif choose==3:
+                break
             else:
-                print("invalid choice")
+                print('invalid choice')
         except:
-            print("invalid choice")
+            print('invalid choice')
 
-vars_for_testing = {
-            'title':['Forrest Gump'],
-            'director':['Robert Zemeckis'],
-            'genre':['Drama'],
-            'rating':['pg-a3'],
-            'length in minutes':['140'],
-            'notable actor(s)':['Tim Robbins']}
-search(movie,vars_for_testing)
-#main(movie)
+
+#main(movie,True)#testing mode
+
+def main2():
+    movie=movies()
+    main(main(movie,False))
