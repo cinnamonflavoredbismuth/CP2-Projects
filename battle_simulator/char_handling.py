@@ -11,7 +11,7 @@ import numpy as np
 import statistics
 
 def write(chars):
-    with open("battle simulator\char_data.csv","w",newline='') as file:
+    with open("battle_simulator\char_data.csv","w",newline='') as file:
         writer=csv.DictWriter(file,fieldnames=['name','lvl','xp','fakemon','hp','str','def','spd'])
         writer.writeheader()
         writer.writerows(chars)
@@ -23,7 +23,7 @@ defaults=[{'name':'tester1','xp':4,'lvl':1,'fakemon':'satan','hp':5,'str':0,'def
 #write(defaults)
 
 def new_char(char):
-    with open("battle simulator\char_data.csv","a",newline='') as file:
+    with open("battle_simulator\char_data.csv","a",newline='') as file:
         writer=csv.writer(file)
         writer.writerow([char['name'],char['xp'],char['lvl'],char['fakemon'],char['hp'],char['str'],char['def'],char['spd']])
 
@@ -39,7 +39,7 @@ def edit_char(player,func):
     #print(func)
     correctlist=[]
     charin=False
-    with open("battle simulator\char_data.csv","r",newline='') as file:
+    with open("battle_simulator\char_data.csv","r",newline='') as file:
         reader = csv.reader(file)
         next(reader)
         for row in reader:
@@ -63,7 +63,7 @@ def edit_char(player,func):
         return
 
 def export_char(name):
-    with open("battle simulator\char_data.csv","r",newline='') as file:
+    with open("battle_simulator\char_data.csv","r",newline='') as file:
         reader = csv.reader(file)
         next(reader)
         for row in reader:
@@ -74,7 +74,7 @@ def export_char(name):
             return False
         
 def all_chars():
-    with open("battle simulator\char_data.csv","r") as file:
+    with open("battle_simulator\char_data.csv","r") as file:
         reader = pd.read_csv(file)
         char = reader.to_dict(orient='records')
         return char
@@ -83,7 +83,7 @@ def random_char():
     return bot
 
 def display_chars():
-    with open("battle simulator\char_data.csv","r",newline='') as file:
+    with open("battle_simulator\char_data.csv","r",newline='') as file:
         reader = csv.reader(file)
         next(reader)
         for row in reader:
