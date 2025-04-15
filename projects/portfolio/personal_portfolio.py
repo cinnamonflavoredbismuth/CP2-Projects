@@ -5,48 +5,8 @@ from personal_library.main import main as library #
 from battle_simulator.main import main2 as battle #
 from coin_change_problem.main import main as coin #
 from word_counter.main import main as word #
-"""
-Introduction:
+from helpers import *
 
-Brief explanation of what your portfolio is 
-
-How to use it (keep it short but informative)
-
-Menu: 
-
-Create an easy-to-use menu
-
-Include at least 6 projects you're proud of
-
-Can be from this class or others
-
-Example: A numbered list or clickable buttons for each project
-
-Project Descriptions: For each project, include:
-
-What the project does
-
-How you found the programming process
-
-What you learned
-
-Your role (if it was a group project)
-
-Note: This information should appear before the code runs
-Working Projects: 
-
-Make sure all projects actually work when selected"""
-def int_input(msg):
-    while True:
-        try:
-            output=int(input(msg))
-            break
-        except ValueError:
-            input("Invalid Input, please use integers")
-    return output
-
-def invoke(func):
-    func()
 
 
 def main():
@@ -56,18 +16,24 @@ def main():
         3:[to_do_list,"To Do List","This is the next step in the CSV Saga, the to do list. It was meant to have the user be able to add, remove, and mark tasks as done on a text file. I had sort of figured out how to read CSVs, but I had no clue how to write to them. I had not an idea how to make them work, and that was a massive source of frustration. I scoured reddit, W3Schools, Google, and even Quora for answers, but none were yeilded to me. By this point, I had enough. I decided that CSVs were the bane of my existence, and that I hated them. After some explaination from friends, however, things gradually started to make sense. Granted, I still had to have 2 tries to get it right, but I was then left with an actually functioning peice of code! I would come to use these newfound CSV skills with my later projects, and it was quintessential."],
         4:[battle,"Battle Simulator","Here it was: my biggest project as of yet. The Battle Simulator, meant to have a battling game with individual stats that you can level up, and have characters that can you save between runs of the game so you don't have to restart every time. Of course, to make these characters save between loads, I had to use my age-old enemy: CSVs. Things were different this time, however. I had gained the upper hand. I initially just stole the code from my to do list and updated it to save the characters. The CSV evolved, the code evolved, and most importantly, I evolved. I finally knew how CSVs worked! All I needed to do now was to make a battle system. Easy, right? Apparently not. I ended up back at my desk at 10pm debugging and fixing my code, only for my code to, you guessed it, not to get a passing score. The next project was just upgrading the battle simulator, so I fixed it while adding new features, so the updated battle simulator and my original battle simulator would get the points for actually working. At least, thats what I assumed. It seemed I only got graded on the updated battle simulator! Which, in hindsight, makes sense, but it was rather a bother to fix."],
         5:[coin,"Coin Change Problem","The coin change problem, a classic in beginner programming classes, this one with a minor twist: We had to use CSVs in it. The premise of the coin change problem, if you're unfamilliar, is converting a total dollar amount to change. My teacher said it would be easy, and she did not dissapoint. I used my newfound CSV skills to add the coins and their values to the document and easlily fetch them to use for the conversions. From this I learned that you don't only have to seperate things with commas, but I used dashes to connect coins and values and then separated them into their own lists."],
-        6:[word,"Word Counter","The Word counter was basically just letting someone upload a document and make a word count from it. In the beginning of my programming class, this would have been a huge struggle, however, with my text file skills, I could now read documents like it was second nature. I used spaces and new line indicators to find how many words there were, and it worked perfectly! This was my easiest project yet, I could not have completed it without my fight to get my proficiency with these file types."]}
+        6:[word,"Word Counter","The Word counter was basically just letting someone upload a document and make a word count from it. In the beginning of my programming class, this would have been a huge struggle, however, with my text file skills, I could now read documents like it was second nature. I used spaces and new line indicators to find how many words there were, and it worked perfectly! This was my easiest project yet, I could not have completed it without my fight to get my proficiency with these file types."],
+        7:[0,"Exit",'Thank you']}
     def choose():
-        for x in list(projects.keys()):
-            print(f"{x}. {projects[x][1]}")
-        choice=int_input("What function do you want?\n")
+        for x in list(projects.keys()): 
+            print(f"{x}. {projects[x][1]}") #this is the number you choose
+        choice=int_input("What function do you want?\n") 
         if choice not in list(projects.keys()):
             print("Option not in the given choices")
-            choose()
+            choose() #stupid proofing
         else: return choice
+
     input('This portfolio is essentially a culmination of the six projects I have been most proud of, or worked the hardest on while in CS1400 2. Each of these projects served an important role in my programming journey, and I have gathered them all for you to tell you how they affected me, my knowledge, and of course, my mental state.\nPress Enter to continue\n')
     input('How to use:\nChoose the number of which project you want to see, press enter to see a brief description, and then press enter again to move on to run the project\nPress enter to continue')
     choice=choose()
     input(f'{projects[choice][2]}\nPress Enter to contunue')
-    invoke(projects[choice][0])
+    if projects[choice][0]==0:
+        return #exit
+    else:
+        invoke(projects[choice][0])
+    main()
 main()

@@ -1,6 +1,6 @@
 #Cecily Strong Battle Simulator Level Handling
-from helper_functions import options
-from char_handling import *
+from battle_simulator.helper_functions import options
+from battle_simulator.char_handling import *
 import random
 char1=random_char()
 char2=random_char()

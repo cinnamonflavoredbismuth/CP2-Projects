@@ -1,8 +1,7 @@
 #Cecily Strong Battle Simulator
-from battle import fakemon
-from battle import main as fight
-from char_handling import *
-from helper_functions import *
+from battle_simulator.battle import main as fight
+from battle_simulator.char_handling import *
+from battle_simulator.helper_functions import *
 
 def new_game():
     input("hello, I am dr. Tree, the valleys one and only reputable professor (press enter to continue text)")
@@ -140,5 +139,5 @@ def main2():
             'heal':{
                 'main character syndrome':3
             }},
-}
+    }
     main(fakemon)

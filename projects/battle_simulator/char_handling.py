@@ -1,7 +1,6 @@
 #Cecily Strong Battle simulator charracter handling
 #Functions: 1 Edit, 2 Delete
 import csv
-from helper_functions import options
 import pandas as pd
 from faker import Faker
 fake=Faker()
@@ -11,7 +10,7 @@ import numpy as np
 import statistics
 
 def write(chars):
-    with open("battle_simulator\char_data.csv","w",newline='') as file:
+    with open("projects/battle_simulator/data.csv","w",newline='') as file:
         writer=csv.DictWriter(file,fieldnames=['name','lvl','xp','fakemon','hp','str','def','spd'])
         writer.writeheader()
         writer.writerows(chars)
@@ -23,7 +22,7 @@ defaults=[{'name':'tester1','xp':4,'lvl':1,'fakemon':'satan','hp':5,'str':0,'def
 #write(defaults)
 
 def new_char(char):
-    with open("battle_simulator\char_data.csv","a",newline='') as file:
+    with open("projects/battle_simulator/data.csv","a",newline='') as file:
         writer=csv.writer(file)
         writer.writerow([char['name'],char['xp'],char['lvl'],char['fakemon'],char['hp'],char['str'],char['def'],char['spd']])
 
@@ -39,7 +38,7 @@ def edit_char(player,func):
     #print(func)
     correctlist=[]
     charin=False
-    with open("battle_simulator\char_data.csv","r",newline='') as file:
+    with open("projects/battle_simulator/char_data.csv","r",newline='') as file:
         reader = csv.reader(file)
         next(reader)
         for row in reader:
@@ -63,18 +62,23 @@ def edit_char(player,func):
         return
 
 def export_char(name):
-    with open("battle_simulator\char_data.csv","r",newline='') as file:
+    with open("projects/battle_simulator/char_data.csv","r",newline='') as file:
         reader = csv.reader(file)
         next(reader)
         for row in reader:
-            if row[0] == name:
-                char={'name':row[0],'lvl':row[1],'xp':row[2],"fakemon":row[3],"hp":row[4],"str":row[5],'def':row[6],'spd':row[7]}
-                return char
+            if len(row)<0:
+                pass
+            else:
+                #print(row)
+                if row[0] == name:
+                    char={'name':row[0],'lvl':row[1],'xp':row[2],"fakemon":row[3],"hp":row[4],"str":row[5],'def':row[6],'spd':row[7]}
+                    return char
         else:
             return False
+#export_char('Cecily')
         
 def all_chars():
-    with open("battle_simulator\char_data.csv","r") as file:
+    with open("projects/battle_simulator/char_data.csv","r") as file:
         reader = pd.read_csv(file)
         char = reader.to_dict(orient='records')
         return char
@@ -83,7 +87,7 @@ def random_char():
     return bot
 
 def display_chars():
-    with open("battle_simulator\char_data.csv","r",newline='') as file:
+    with open("projects/battle_simulator/char_data.csv","r",newline='') as file:
         reader = csv.reader(file)
         next(reader)
         for row in reader:

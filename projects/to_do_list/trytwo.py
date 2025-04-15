@@ -116,4 +116,4 @@ def main():
 
 #write(['wash dishes','clean room','fold laundry X'])
 
-main()
+#main()
