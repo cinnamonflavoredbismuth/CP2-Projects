@@ -8,10 +8,16 @@ User is able to print the whole list"""
 import csv
 def movies():
     movie=[]
-    with open("movie_recommender\Movies list.csv") as file:
+    with open("projects\movie_recommender\Movies list.csv") as file:
         reader = csv.reader(file)
         next(reader)
         for row in reader:
+
+
+
+
+
+            
             movie.append({"title":row[0],
                             "director":row[1],
                             "genre": row[2],

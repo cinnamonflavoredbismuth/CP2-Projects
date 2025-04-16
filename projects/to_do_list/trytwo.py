@@ -14,7 +14,7 @@ a+ = append and read
 
 
 def display():
-    with open("to do list/list.txt","r") as file:
+    with open("projects\to_do_list\list.txt","r") as file:
             reader = file.read()
             words=''
             for item in reader:
@@ -26,14 +26,14 @@ def display():
                 
 
 def write(data):
-    with open("to do list/list.txt","w",newline='') as file:
+    with open("projects\to_do_list\list.txt","w",newline='') as file:
         for x in data:
             file.write(f"{data[data.index(x)]}\n")
     return
 
 def remove(item):
     correctlist = []
-    with open("to do list/list.txt","r") as file:
+    with open("projects\to_do_list\list.txt","r") as file:
             reader = file.read()
             words=""
             for letter in reader:
@@ -49,7 +49,7 @@ def remove(item):
 
 def add(item):
     correctlist=[]
-    with open("to do list/list.txt","r") as file:
+    with open("projects\to_do_list\list.txt","r") as file:
             reader = file.read()
             words=""
             for letter in reader:
@@ -64,7 +64,7 @@ def add(item):
 
 def complete(item):
     correctlist = []
-    with open("to do list/list.txt","r") as file:
+    with open("projects\to_do_list\list.txt","r") as file:
             reader = file.read()
             words=""
             for letter in reader:

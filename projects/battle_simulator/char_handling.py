@@ -10,7 +10,7 @@ import numpy as np
 import statistics
 
 def write(chars):
-    with open("projects/battle_simulator/data.csv","w",newline='') as file:
+    with open("projects/battle_simulator/char_data.csv","w",newline='') as file:
         writer=csv.DictWriter(file,fieldnames=['name','lvl','xp','fakemon','hp','str','def','spd'])
         writer.writeheader()
         writer.writerows(chars)
@@ -22,7 +22,7 @@ defaults=[{'name':'tester1','xp':4,'lvl':1,'fakemon':'satan','hp':5,'str':0,'def
 #write(defaults)
 
 def new_char(char):
-    with open("projects/battle_simulator/data.csv","a",newline='') as file:
+    with open("projects/battle_simulator/char_data.csv","a",newline='') as file:
         writer=csv.writer(file)
         writer.writerow([char['name'],char['xp'],char['lvl'],char['fakemon'],char['hp'],char['str'],char['def'],char['spd']])
 

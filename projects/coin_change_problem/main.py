@@ -29,7 +29,7 @@ def debug():
     sys.settrace(trace_calls)
 
 def coins_dict():
-    with open("coin_change_problem\coin_denomination.csv","r",newline='') as file:
+    with open("projects/coin_change_problem/coin_denomination.csv","r",newline='') as file:
         coins={}
         reader = csv.reader(file)
         next(reader)
@@ -38,7 +38,7 @@ def coins_dict():
         return coins
 
 def country_coins(country):
-    with open("coin_change_problem\coin_denomination.csv","r",newline='') as file:
+    with open("projects/coin_change_problem/coin_denomination.csv","r",newline='') as file:
         coins={}
         reader = csv.reader(file)
         next(reader)
@@ -80,10 +80,10 @@ def main():
     print('these are all the currencies:')
     for x in countries:
         print(f'    {x}')
-    country=input("what is your currency (use their 3 letter abreviations)?\n")
+    country=input("what is your currency (use their 3 letter abreviations)?/n")
     if country.lower() in countries:
         try:
-            amount=float(input("How much money do you want to convert to change (go to 2 decimal places)?\n"))
+            amount=float(input("How much money do you want to convert to change (go to 2 decimal places)?/n"))
             if amount>0:
                 coins=coin_change(country,amount)
                 for x in coins:

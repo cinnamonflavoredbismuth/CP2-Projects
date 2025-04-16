@@ -1,8 +1,8 @@
 #Cecily Strong Personal Portfolio
 from movie_recommender.main import main2 as movie #
 from to_do_list.trytwo import main as to_do_list #
-from personal_library.main import main as library #
-from battle_simulator.main import main2 as battle #
+from personal_library.main import main as library # 
+from battle_simulator.main import main2 as battle 
 from coin_change_problem.main import main as coin #
 from word_counter.main import main as word #
 from helpers import *
