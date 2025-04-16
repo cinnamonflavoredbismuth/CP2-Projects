@@ -5,7 +5,7 @@ from personal_library.main import main as library #
 from battle_simulator.main import main2 as battle 
 from coin_change_problem.main import main as coin #
 from word_counter.main import main as word #
-from helpers import *
+from portfolio.helpers import *
 
 
 
