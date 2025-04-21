@@ -80,10 +80,10 @@ def main():
     print('these are all the currencies:')
     for x in countries:
         print(f'    {x}')
-    country=input("what is your currency (use their 3 letter abreviations)?/n")
+    country=input("what is your currency (use their 3 letter abreviations)?\n")
     if country.lower() in countries:
         try:
-            amount=float(input("How much money do you want to convert to change (go to 2 decimal places)?/n"))
+            amount=float(input("How much money do you want to convert to change (go to 2 decimal places)?\n"))
             if amount>0:
                 coins=coin_change(country,amount)
                 for x in coins:
