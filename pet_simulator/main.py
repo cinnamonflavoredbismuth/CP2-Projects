@@ -39,21 +39,25 @@ def print_list(list):
 
 #Classes (for accounts, items, player, ect)
 class pet:
-    def __init__(self,name,species,age,hunger,happiness,energy):
+    def __init__(self,user,name,species,age,hunger,happiness,energy,skills):
         self.name=name
         self.species=species
         self.age=age
         self.hunger=hunger
         self.happiness=happiness
         self.energy=energy
+        self.skills=skills
+        self.user=user
         #'''
     def __str__(self):
-        return f"""    {self.name}
+        print(f"""    {self.name}
         Species: {self.species}
         Age: {self.age} day(s)
         Hunger: {self.hunger}
         Happiness: {self.happiness}
-        Energy: {self.energy}"""
+        Energy: {self.energy}""")
+        print_list(self.skills)
+        return '' 
     def default(self):
         self.age=0
         self.hunger=20
@@ -63,17 +67,17 @@ class pet:
         self.hunger=self.hunger+food.level
         self.happiness=self.happiness+food.happiness
         user.time+=1
-    def play(self,user,toy):
+    def play(self,toy):
         self.energy=self.energy-1
         self.happiness=self.happiness+toy.level
         self.hunger=self.hunger-1
-        user.time+=1
-    def sleep(self,user,bed):
+        self.user.time+=1
+    def sleep(self,bed):
         self.energy=self.energy+bed.level
         self.age=self.age+1
-        user.time+=5
+        self.user.time+=5
     def export(self):
-        return f"{self.name}-{self.species}-{self.age}-{self.hunger}-{self.happiness}-{self.energy}"
+        return f"{self.user}-{self.name}-{self.species}-{self.age}-{self.hunger}-{self.happiness}-{self.energy}-{self.skills}"
 
 class item:
     def __init__(self,name,use,level,happiness,price):
