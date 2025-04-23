@@ -39,22 +39,23 @@ def print_list(list):
 
 #Classes (for accounts, items, player, ect)
 class pet:
-    def __init__(self,name,species,age,hunger,happiness,energy):
+    def __init__(self,name,species,age,hunger,happiness,energy,skills,time):
         self.name=name
         self.species=species
         self.age=age
         self.hunger=hunger
         self.happiness=happiness
         self.energy=energy
-        #'''
+        self.time=time
+        self.skills=skills
     def __str__(self):
-        print(f"""    {self.name}
+        print(f"""    name: {self.name}
         Species: {self.species}
         Age: {self.age} day(s)
         Hunger: {self.hunger}
         Happiness: {self.happiness}
         Energy: {self.energy}""")
-        print_list(self.skills)
+       # print_list(self.skills)
         return '' 
     def default(self):
         self.age=0
@@ -64,18 +65,18 @@ class pet:
     def feed(self,food):
         self.hunger=self.hunger+food.level
         self.happiness=self.happiness+food.happiness
-        user.time+=1
-    def play(self,user,toy):
+        self.time+=1
+    def play(self,toy):
         self.energy=self.energy-1
         self.happiness=self.happiness+toy.level
         self.hunger=self.hunger-1
-        self.user.time+=1
+        self.time+=1
     def sleep(self,bed):
         self.energy=self.energy+bed.level
         self.age=self.age+1
-        self.user.time+=5
+        self.time+=5
     def export(self):
-        return f"{self.name}-{self.species}-{self.age}-{self.hunger}-{self.happiness}-{self.energy}"
+        return f"{self.name}-{self.species}-{self.age}-{self.hunger}-{self.happiness}-{self.energy}-{self.skills}-{self.time}"
 
 class item:
     def __init__(self,name,use,level,happiness,price):
@@ -117,15 +118,15 @@ class player:
         print(f"""{self.name}
     {self.coins} coins 
 Pets:""")
-        for x in range(len(self.pets)):
-            print(f'    {self.pets[x].name}')
+        for x in self.pets:
+            print(f'    {x.name}')
         print('Items:')
         for x in range(len(self.items)):
             print(f'    {self.items[x].name} (lvl {self.items[x].level})')
         return ''
-    def default(self,user):
+    def default(self):
         self.coins=20
-        user.items=[item('basic bed','bed',1,1,0),
+        self.items=[item('basic bed','bed',1,1,0),
        item('basic food','food',1,1,0),
        item('basic toy','toy',1,1,0)]
     def export(self):
@@ -148,14 +149,13 @@ def load(name):
             if len(row)<0:
                 pass
             else:
-                #print(row)
                 if row[0] == name:
                     char=row
                     pets1=(char[1].split(';'))
                     pets=[]
                     for x in pets1:
                         traits=x.split('-')
-                        pets.append(pet(traits[0],traits[1],traits[2],traits[3],traits[4],traits[5],traits[6],traits[7]))
+                        pets.append(pet(traits[0],traits[1],traits[2],traits[3],traits[4],traits[5],[traits[6]],traits[7]))
                     items1=(char[2].split(';'))
                     items=[]
                     for x in items1:
@@ -165,26 +165,23 @@ def load(name):
                     char[1]=pets
                     char[2]=items
                     return char
-        else:
-            return False
-
-def write(chars):
-    with open("pet_simulator/accounts.csv","w",newline='') as file:
-        writer=csv.DictWriter(file,fieldnames=['name','pets','items','coins','time'])
-        writer.writeheader()
-        writer.writerows(chars)
+ 
 
 def save(acc):
-    accounts=[]
+    accounts=[]  
     account=acc.export()
     with open("pet_simulator/accounts.csv","r",newline='') as file:
         reader=csv.reader(file)
+        next(reader)
         for row in reader:
             if row[0] == acc.name:
                 accounts.append({'name':account[0],'pets':account[1],'items':account[2],'coins':account[3],'time':account[4]})
             else:
                 accounts.append({'name':row[0],'pets':row[1],'items':row[2],'coins':row[3],'time':row[4]})
-    write(accounts)
+    with open("pet_simulator/accounts.csv","w",newline='') as file:
+        writer=csv.DictWriter(file,fieldnames=['name','pets','items','coins','time'])
+        writer.writeheader()
+        writer.writerows(accounts)
 
 def new_acc(acc):
     with open("pet_simulator/accounts.csv","a",newline='') as file:
@@ -192,7 +189,7 @@ def new_acc(acc):
         if load(acc.name) == False:
             writer.writerow(acc.export())
         else:
-            print('Username already taken')
+            print(f'Username already taken')
 
 def default_account(name,pet_name,species):
     account=player(name,[pet(pet_name,species,0,0,0,0)],0,20,0)
@@ -201,8 +198,8 @@ def default_account(name,pet_name,species):
 
 #functions
 def login():
-    print('Welcome to your pet simulator!')
-    print('do you have an account?')
+    print(f'Welcome to your pet simulator!')
+    print(f'do you have an account?')
     print_list(['yes','no'])
     choice=int_input('')
     if choice==0:
@@ -214,12 +211,12 @@ def login():
         new_acc(account.export())
         loaded=load(account.name)
         if loaded==False:
-            print('you do not have an account, make a new one?')
+            print(f'you do not have an account, make a new one?')
             login()
         else:
             acc=player(loaded[0],loaded[1],loaded[2],loaded[3],loaded[4])
     else:
-        print('invalid choice')
+        print(f'invalid choice')
         login()
     return acc
 
@@ -233,14 +230,25 @@ def old(user):
     print('your pets missed you')
     print('lets check up on them!')
 
-def pet_options(user):
+def choose_pet(user):
     print("what pet do you want to check on?")
-    print_list(*user.pets.name)
+    for x in range(len(user.pets)):
+        print(f"{x}. {user.pets[x].name}")
+    pet=user.pets[int_input('')]
+    pet_play(pet)
+
+def pet_play(pet):
+    print(pet)
+    print_list([f'Play with {pet.name}',f"feed {pet.name}",f'put {pet.name} to bed'])
+    choice=int_input('what do you want to do?')
+    #You left off here. make it so choices do something. also add a list of skills that can be unlocked at some point
 
 def main():
     #acc=login()
     acc=load('cecily')
     acc=player(acc[0],acc[1],acc[2],acc[3],acc[4])
     print(acc)
+    choose_pet(acc)
+    save(acc)
 
 main()
