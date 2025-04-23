@@ -42,14 +42,14 @@ class pet:
     def __init__(self,name,species,age,hunger,happiness,energy,skills,time):
         self.name=name
         self.species=species
-        self.age=age
-        self.hunger=hunger
-        self.happiness=happiness
-        self.energy=energy
-        self.time=time
+        self.age=str(age)
+        self.hunger=str(hunger)
+        self.happiness=str(happiness)
+        self.energy=str(energy)
+        self.time=str(time)
         self.skills=skills
     def __str__(self):
-        print(f"""    name: {self.name}
+        print(f"""    {self.name}
         Species: {self.species}
         Age: {self.age} day(s)
         Hunger: {self.hunger}
@@ -57,26 +57,38 @@ class pet:
         Energy: {self.energy}""")
        # print_list(self.skills)
         return '' 
+    def time_up(self,number):
+        self.hunger=int(self.hunger)-number
+        self.energy=int(self.energy)-number
+        self.happiness=int(self.happiness)-number
+        self.time=int(self.time)+number
     def default(self):
         self.age=0
         self.hunger=20
         self.happiness=20
         self.energy=20
     def feed(self,food):
-        self.hunger=self.hunger+food.level
-        self.happiness=self.happiness+food.happiness
-        self.time+=1
+        self.hunger=int(self.hunger)+int(food.level)
+        self.happiness=int(self.happiness)+int(food.happiness)
+        self.time_up(1)
     def play(self,toy):
-        self.energy=self.energy-1
-        self.happiness=self.happiness+toy.level
-        self.hunger=self.hunger-1
-        self.time+=1
+        self.energy=int(self.energy)-1
+        self.happiness=int(self.happiness)+int(toy.level)
+        self.hunger=int(self.hunger)-1
+        self.time_up(1)
     def sleep(self,bed):
-        self.energy=self.energy+bed.level
-        self.age=self.age+1
-        self.time+=5
+        self.energy=int(self.energy)+int(bed.level)
+        self.age=int(self.age)+1
+        self.time_up(5)
+    def skill_up(self):
+        skill_options=['Fetch','Hunt a rat','eat trash','Grab the mail','Lick your shoes','Use the toilet like a human','Write a manuscript','Memorize To Be or Not To Be','Speak','Roll over','Stare at ghosts in the corner']
+        if len(self.skills)<=self.time*5:
+            item=random.choice(skill_options)
+            self.skills.append(item)
+            skill_options.remove(item)
     def export(self):
-        return f"{self.name}-{self.species}-{self.age}-{self.hunger}-{self.happiness}-{self.energy}-{self.skills}-{self.time}"
+        skills='/'.join(tuple(self.skills))
+        return f"{self.name}-{self.species}-{self.age}-{self.hunger}-{self.happiness}-{self.energy}-{skills}-{self.time}"
 
 class item:
     def __init__(self,name,use,level,happiness,price):
@@ -139,6 +151,20 @@ Pets:""")
         items=';'.join(exported_item)
         pets=';'.join(exported_pet)
         return [self.name,pets,items,str(self.time),str(self.coins)]
+    
+class shop:
+    def __init__(self,items):
+        self.items=items
+    def buy(self):
+        bought=input("Do you want to buy this item?")
+        choices=[]
+        for x in self.items:
+            choices.append(x.name)
+        chosen=int_input(choices)
+        if bought==False:
+            return False
+        if bought == True:
+            return [True,chosen]
 
 #Save/load handling
 def load(name):
@@ -155,7 +181,7 @@ def load(name):
                     pets=[]
                     for x in pets1:
                         traits=x.split('-')
-                        pets.append(pet(traits[0],traits[1],traits[2],traits[3],traits[4],traits[5],[traits[6]],traits[7]))
+                        pets.append(pet(traits[0],traits[1],traits[2],traits[3],traits[4],traits[5],traits[6].split('/'),traits[7]))
                     items1=(char[2].split(';'))
                     items=[]
                     for x in items1:
@@ -166,7 +192,6 @@ def load(name):
                     char[2]=items
                     return char
  
-
 def save(acc):
     accounts=[]  
     account=acc.export()
@@ -196,7 +221,6 @@ def default_account(name,pet_name,species):
     acc=account.default()
     return acc
 
-#functions
 def login():
     print(f'Welcome to your pet simulator!')
     print(f'do you have an account?')
@@ -220,6 +244,8 @@ def login():
         login()
     return acc
 
+#functions
+
 def new(user):
     print(f"Hello {user.name}!")
     print(f"The people at the animal shelter have been watching you")
@@ -235,13 +261,45 @@ def choose_pet(user):
     for x in range(len(user.pets)):
         print(f"{x}. {user.pets[x].name}")
     pet=user.pets[int_input('')]
-    pet_play(pet)
+    pet_play(pet,user)
 
-def pet_play(pet):
+def pet_play(pet,user):
     print(pet)
     print_list([f'Play with {pet.name}',f"feed {pet.name}",f'put {pet.name} to bed'])
-    choice=int_input('what do you want to do?')
-    #You left off here. make it so choices do something. also add a list of skills that can be unlocked at some point
+    choice=int_input('what do you want to do?   ')
+    thing=[]
+    items=[]
+    if choice==0: #play
+        for x in user.items:
+            if x.use=='toy':
+                thing.append(x.name)
+                items.append(x)
+        print(f'what toy do you want to use?')
+        print_list(thing)
+        choice=int_input(f'Choose a toy:  ')
+        pet.play(items[choice])
+    elif choice==1: #feed
+        for x in user.items:
+            if x.use=='food':
+                thing.append(x.name)
+                items.append(x)
+        print(f'what food do you want to use?')
+        print_list(thing)
+        choice=int_input(f'Choose a food:  ')
+        pet.feed(items[choice])
+    elif choice==2: #put to bed
+        for x in user.items:
+            if x.use=='bed':
+                thing.append(x.name)
+                items.append(x)
+        print(f'what bed do you want to use?')
+        print_list(thing)
+        choice=int_input(f'Choose a bed:  ')
+        pet.sleep(items[choice])
+    else: #error handling
+        print('invalid option')
+        pet_play(pet,user)
+    print(pet)
 
 def main():
     #acc=login()
@@ -249,6 +307,7 @@ def main():
     acc=player(acc[0],acc[1],acc[2],acc[3],acc[4])
     print(acc)
     choose_pet(acc)
+    
     save(acc)
 
 main()
