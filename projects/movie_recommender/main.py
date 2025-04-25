@@ -119,4 +119,4 @@ def main(movie,test_mode):
 
 def main2():
     movie=movies()
-    main(main(movie,False))
+    main(movie,False)
